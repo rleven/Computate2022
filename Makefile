@@ -1,7 +1,7 @@
-all: test build/blatt0.pdf
+all: build/test build/blatt0.pdf
 
-test: test.cpp
-	g++ -Wall -ffast-math -march=native test.cpp -o test
+build/test: test.cpp | build
+	g++ -o3 -Wall -ffast-math -march=native test.cpp -o build/test
 
 build/blatt0.pdf: FORCE | build
 	  TEXINPUTS=build: \
@@ -18,7 +18,6 @@ build:
 	mkdir -p build
 
 clean:
-	rm -f test
 	rm -rf build
 
 FORCE:
