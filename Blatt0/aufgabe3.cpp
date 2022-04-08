@@ -28,15 +28,16 @@ int main()
   ofstream outfile, eulerdaten, symmdaten, truedaten; //defining out to file stream for general textfile and three files for matplotlib
 
   outfile.open("daten3.txt", ios_base::app);
-  eulerdaten.open("eulerdaten.log", ios_base::app);
-  symmdaten.open("symmdaten.log", ios_base::app);
-  truedaten.open("truedaten.log", ios_base::app);
+  eulerdaten.open("eulerdaten.txt", ios_base::app);
+  symmdaten.open("symmdaten.txt", ios_base::app);
+  truedaten.open("truedaten.txt", ios_base::app);
 
   outfile << "Our chosen value for Delta t is 0.05" << endl;
-
+  /*
   eulerdaten << "#x y";
   symmdaten << "#x y";
   truedaten << "#x y";
+  */
 
   for (double t=0; t < 11; t++) {
     
@@ -60,11 +61,11 @@ int main()
     outfile<<"\nTrue Value of y at x = "<< t << " is " << exp(-t) << endl;
 
     /* Saving Euler Data */
-    eulerdaten << "\n" << t << "  " << yn;
+    eulerdaten << "\n" << t << "," << yn;
     /* Saving symmetric Euler Data */
-    symmdaten << "\n" << t << "  " << s_yn;
+    symmdaten << "\n" << t << "," << s_yn;
     /* Saving true Data */
-    truedaten << "\n" << t << "  " << exp(-t);
+    truedaten << "\n" << t << "," << exp(-t);
     }
   outfile.close();
   eulerdaten.close();
