@@ -1,70 +1,54 @@
+#include <ios>
 #include <iostream>
 #include <cmath>
+#include <fstream>
 using namespace std;
 
-class Expression_1 {
-  public:
-    double result(double x);
-};
-
-double Expression_1::result(double x) {
-  return 1/(sqrt(x))-1/(sqrt(x+1));
+/* Definitions of the functions 1 till 3 */
+double result1(double x){
+    return 1/(sqrt(x))-1/(sqrt(x+1));
 }
 
-class Expression_2 {
-  public:
-    double result(double x);
-};
-
-double Expression_2::result(double x) {
-  return (1 - cos(x))/(sin(x));
+double result2(double x){
+    return (1-cos(x))/sin(x);
 }
 
-
-class Expression_3 {
-  public:
-    double result(double x, double del);
-};
-
-double Expression_3::result(double x, double del) {
-  return sin(x + del) - sin(x);
+double result3(double x, double delta){
+    return sin(x+delta)-sin(x);
 }
 
+int main(){
+    /* Definitions of variables */
+    double bigX[100], smallX[100], smallD[100], x[100];
 
-int main() {
-
-    double big_x, small_x, small_del, x;
-    Expression_1 exp1;
-    Expression_2 exp2;
-    Expression_3 exp3;
-
-    cout << "Enter a big number for x: ";
-    cin >> big_x;
-
-    //print first expression
-    cout << " The first expression calculated directly from the formula yields: " << exp1.result(big_x) << "\n";
-
-    cout << "Enter a small number for x: ";
-    cin >> small_x;
-    // calculate second expression normally
-    cout << " The second expression calculated directly from the formula yields: " << exp2.result(small_x) << "\n"; 
-
-    cout << "Enter a small number for delta: ";
-    cin >> small_del;
-    cout << "Also enter a number for x: ";
-    cin >> x;
-    //print third expression
-    cout << " The third expression calculated directly from the formula yields: " << exp3.result(x,small_del) << "\n"; 
-
-    cout << "Testing Big numbers for Expression 1: \n"; 
-    for (double i = 1*pow(10,15); i < pow(10,17); i= i*1.5) {
-        cout << " Expression1 with " << i << ": " << exp1.result(i) << "\n";
+    /* Set arbitrary scale, that only abides single rule (this rule is the variables name) */
+    for (int i=0; i<100; i++) {
+    bigX[i] = 1000.0 + double(i);
+    smallX[i] = 0.01 + double(i)/1000;
+    smallD[i] = 0.01 + double(i)/1000;
+    x[i] = i;
     }
-    double i = 1;
-    while (exp1.result(i) != 0) {
-        i = i + pow(10,7);
+
+    /* Set output files */
+    ofstream teil1, teil2, teil3;
+    teil1.open("teil1.log", ios_base::app);
+    teil2.open("teil2.log", ios_base::app);
+    teil3.open("teil3.log", ios_base::app);
+    teil1 << "#x    y";
+    teil2 << "#x    y";
+    teil3 << "#x    d    y";
+
+    /* Calculation and Data saving */
+    for (int i=0; i<100; i++) {
+    teil1 << "\n" << bigX[i] << "   " << result1(bigX[i]);
+    teil2 << "\n" << smallX[i] << "   " << result2(smallX[i]);
+    teil3 << "\n" << x[i] << "   " << smallD[i] << " " << result3(x[i], smallD[i]);
     }
-    cout << "\n" << " Expression1 with " << i << ": " << exp1.result(i) << "\n";
+
+    /* Closing files */
+    teil1.close();
+    teil2.close();
+    teil3.close();
 
     return 0;
 }
