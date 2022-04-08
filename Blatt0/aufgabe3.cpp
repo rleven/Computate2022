@@ -34,9 +34,9 @@ int main()
 
   outfile << "Our chosen value for Delta t is 0.05" << endl;
 
-  eulerdaten << "#x y" << endl;
-  symmdaten << "#x y" << endl;
-  truedaten << "#x y" << endl;
+  eulerdaten << "#x y";
+  symmdaten << "#x y";
+  truedaten << "#x y";
 
   for (double t=0; t < 11; t++) {
     
