@@ -2,12 +2,23 @@
 \section{Aufgabe 0: Verständnisfragen}
 \label{sec:auf0}
 
-\subsection{1) \textbf{Was bedeutet \textit{numerische Stabilität} und wieso tritt sie auf?}}
+\subsection{1) \textbf{Was bedeutet numerische \textit{Stabilität} und wieso tritt sie auf?}}
 
 Einen Algorithmus mit einer geringen Fehlerfortpflanzung bezeichnet man als numerisch stabil, einen solchen mit einer starken Fehlerfortpflanzung als numerisch instabil.
 Eine Störung der Daten führt zu veränderten Ergebnissen.
 Diese Störungsempfindlichkeit bezeichnet man auch als Kondition und sie stellt eine fundamentale Eigenschaft des mathematischen Zusammenhangs dar.
 
+
+Numerische Stabilität macht eine Aussage über die Verstärkung der Fehler der Daten durch den numerischen Algorithmus.
+Ein numerisch stabiler Algorithmus verstärkt die Anfangsfehler dabei nicht.
+Werden dei Fehler verstärkt ist der Algorithmus instabil.
+Neben der Stabilität wird oft auch die Kondition eines Problems betrachtet, welche beschreibt wie sich die Anfangsfehler verstärken bei exakter Mathematischer Rechnung (kein numerischer Algorithmus).
+Um einen Algorithmus möglichst stabil zu machen sollten einige Dinge vermieden bzw. beachtet werden.
+Die Subtraktion gleich großer Zahlen sollte möglichst vermieden werden, da dadurch die relativen Fehler verstärkt werden.
+Um absolute Fehler nicht zu verstärken sollte die Division durch kleine Zahlen und analog die Multiplikation mit großen Zahlen vermieden werden.
+
 \subsection{2) \textbf{Wieso kann eine höhere \textit{Genauigkeit} (beispielsweise durch eine feine Diskretisierung) zu numerischer Instabilität führen?}}
 
 Bei einer höheren Genauigkeit der eingegebenen Daten wird die Kondition des Algorithmus geändert, sodass es nicht mehr numerisch stabil ist.
+
+Eine feinere Diskretisierung kann dazu führen dass an die grenzen der Speicherung des Datentyps gelangt wird. Wenn nun sehr kleine ZAhlen voneinander subtrahiert werden könnten Ergebnisse heraus kommen die im jeweiligen Datentyp nicht dargestellt werden können und die Stabilität wird damit verschlechtert.

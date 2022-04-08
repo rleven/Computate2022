@@ -1,0 +1,31 @@
+\newpage
+\section{Aufgabe2: Rundungsfehler}
+\label{sec:auf2}
+
+\subsection{a) für große x:}
+
+Subtraktion (fast) gleich großer Zahlen ist hier das Problem.
+\begin{align}
+    \frac{1}{\sqrt{x}} - \frac{1}{\sqrt{x+1}} 
+    = \frac{\sqrt{x+1}-\sqrt{x}}{\sqrt{x+1}\sqrt{x}} 
+    = \frac{x}{\sqrt{x}\left(x+1\right)+\sqrt{x+1}x}
+\end{align}
+
+
+\subsection{b) für kleine x:}
+
+$1-\cos(x)$ ist instabil für x nahe Null.
+\begin{align}
+    & \frac{1-\cos(x)}{\sin(x)}\\
+    =& \frac{ 1 - \sqrt{1-\sin^2(x)} (1 + \sqrt{1-\sin^2(x)}) }{ 1 + \sqrt{1-\sin^2(x)} }\\
+    =& \frac{ 1 - \left( 1-\sin^2(x) \right) }{ 1 + \cos(x)}\\
+    =& \frac{ \sin^2(x) }{ 1 + \cos(x)}
+\end{align}
+
+\subsection{c) für kleine delta:}
+
+Subtraktion (fast) gleich großer Zahlen ist hier das Problem.
+\begin{align}
+    \sin(x + \delta) - \sin(x)\\
+    = 
+\end{align}
