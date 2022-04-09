@@ -1,7 +1,9 @@
-all: build/test build/blatt0.pdf
+all: build/aufgaben build/blatt0.pdf
 
-build/test: test.cpp | build
-	g++ -o3 -Wall -ffast-math -march=native test.cpp -o build/test
+build/aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
+	g++ -o3 -Wall -ffast-math -march=native aufgabe1.cpp -o build/aufgabe1
+	g++ -o3 -Wall -ffast-math -march=native aufgabe2.cpp -o build/aufgabe2
+	g++ -o3 -Wall -ffast-math -march=native aufgabe3.cpp -o build/aufgabe3
 
 build/blatt0.pdf: FORCE | build
 	  TEXINPUTS=build: \
