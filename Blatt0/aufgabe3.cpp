@@ -33,11 +33,11 @@ int main()
   truedaten.open("truedaten.txt", ios_base::app);
 
   outfile << "Our chosen value for Delta t is 0.05" << endl;
-  /*
+  
   eulerdaten << "#x y";
   symmdaten << "#x y";
   truedaten << "#x y";
-  */
+  
 
   for (double t=0; t < 11; t++) {
     
@@ -61,11 +61,11 @@ int main()
     outfile<<"\nTrue Value of y at x = "<< t << " is " << exp(-t) << endl;
 
     /* Saving Euler Data */
-    eulerdaten << "\n" << t << "," << yn;
+    eulerdaten << "\n" << t << "  " << yn;
     /* Saving symmetric Euler Data */
-    symmdaten << "\n" << t << "," << s_yn;
+    symmdaten << "\n" << t << " " << s_yn;
     /* Saving true Data */
-    truedaten << "\n" << t << "," << exp(-t);
+    truedaten << "\n" << t << " " << exp(-t);
     }
   outfile.close();
   eulerdaten.close();
