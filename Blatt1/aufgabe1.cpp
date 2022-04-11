@@ -38,7 +38,7 @@ int main(){
     x = 0;
     /* Set output files */
     ofstream teil_a, teil2, teil3;
-    teil_a.open("teil_a.txt", ios_base::app);
+    teil_a.open("data/teil_a.txt", ios_base::app);
     
     teil_a << "#h    y";
     
