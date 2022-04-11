@@ -1,11 +1,16 @@
-all: build/aufgaben build/blatt0.pdf
+all: aufgaben blatt0.pdf
 
-build/aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
-	g++ -o3 -Wall -ffast-math -march=native aufgabe1.cpp -o build/aufgabe1
-	g++ -o3 -Wall -ffast-math -march=native aufgabe2.cpp -o build/aufgabe2
-	g++ -o3 -Wall -ffast-math -march=native aufgabe3.cpp -o build/aufgabe3
+aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
+	g++ -o3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
+	g++ -o3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
+	g++ -o3 -Wall -ffast-math aufgabe3.cpp -o data/aufgabe3
 
-build/blatt0.pdf: FORCE | build
+code:
+	data/aufgabe1
+	data/aufgabe2
+	data/aufgabe3
+
+blatt0.pdf: FORCE | build
 	  TEXINPUTS=build: \
 	  BIBINPUTS=build: \
 	  max_print_line=1048576 \
@@ -18,9 +23,10 @@ build/blatt0.pdf: FORCE | build
 
 build:
 	mkdir -p build
+	mkdir -p data
 
 clean:
-	rm -rf build
+	rm -rf build data
 
 FORCE:
 
