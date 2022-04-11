@@ -155,9 +155,9 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# Pyre type checker.pyre/
+# Pyre type checker
+.pyre/
 
-#Mac stuff
 .DS_Store
 
 .xcf
