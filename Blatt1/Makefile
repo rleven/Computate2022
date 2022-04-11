@@ -1,7 +1,7 @@
 all: aufgaben blatt1.pdf
 
 aufgaben: aufgabe1.cpp | build
-	g++ -o3 -Wall -ffast-math -march=native aufgabe1.cpp -o data/aufgabe1
+	g++ -o3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
 
 blatt1.pdf: FORCE | build
 	  TEXINPUTS=build: \
