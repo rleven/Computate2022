@@ -2,6 +2,14 @@
 \section{Aufgabe 0: Verständnisfragen}
 \label{sec:auf0}
 
-\subsection{1) \textbf{Welches der in Aufgabe 2) und 3) genannten Integrationsverfahren hat die höchste Genauigkeit? Welches ist am besten?}}
+\subsection{1) \textbf{Welches der in Aufgabe 2 und 3 genannten Integrationsverfahren hat die höchste Genauigkeit? Welches ist am besten?}}
+Die höchste Genauigkeit hat die Simpsonregel mit $\mathcal{O}(N^{-4})$, weil die Simpsonregel zusätzlich zur ersten Ableitung in der Taylorentwicklung auch die zweite Ableitung berücksichtigt.
+Im Gegensatz dazu hat Trapezregel  und Mittelpunktsregel je $\mathcal{O}(N^{-2})$ Fehler, da bei beiden nur die erste Ableitung betrachtet wird.\\
+Das beste Verfahren ist je nach gegebenem Integral zu wählen.
+So wird die Trapezregel für \textit{lineare} Funktionen exakt.
+Die Mittelpunktsregel ist von Vorteil, wenn die Funktion an den Rändern der Integration problematisch ist (z.B. Teilung durch 0).
+Im Vergleich zur Trapezregel muss also bei der Mittelpunktsregel nicht exakt an den Intervallrändern ausgewertet werden.
+Die Simpsonregel ist am besten, wenn die Funktion quadratisch ist, denn dann wird die Regel exakt.
 
 \subsection{2) \textbf{Welchen Grad darf ein Polynom maximal haben, um mit der Simpsonregel exakt integrierbar zu sein?}}
+Die Simpsonregel wird exakt für quadratische Funktionen, also wäre der maximale Grad $2$.
