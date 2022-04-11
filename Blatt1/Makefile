@@ -1,9 +1,9 @@
 all: build/aufgaben build/main.pdf
 
 build/aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
-	g++ -o3 -Wall -ffast-math -march=native aufgabe1.cpp -o build/aufgabe1
-	g++ -o3 -Wall -ffast-math -march=native aufgabe2.cpp -o build/aufgabe2
-	g++ -o3 -Wall -ffast-math -march=native aufgabe3.cpp -o build/aufgabe3
+	g++ -o3 -Wall -ffast-math -march=native aufgabe1.cpp -o data/aufgabe1
+	g++ -o3 -Wall -ffast-math -march=native aufgabe2.cpp -o data/aufgabe2
+	g++ -o3 -Wall -ffast-math -march=native aufgabe3.cpp -o data/aufgabe3
 
 build/main.pdf: FORCE | build
 	  TEXINPUTS=build: \
@@ -18,9 +18,10 @@ build/main.pdf: FORCE | build
 
 build:
 	mkdir -p build
+	mkdir -p data
 
 clean:
-	rm -rf build
+	rm -rf build data
 
 FORCE:
 
