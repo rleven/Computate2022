@@ -16,10 +16,10 @@ main.pdf: FORCE | build
 	  --halt-on-error \
 	main.tex
 
-code: data/aufgabe1 data/aufgabe2 data/aufgabe3
-	data/./aufgabe1
-	data/./aufgabe2
-	data/./aufgabe3
+code:
+	data/aufgabe1
+	data/aufgabe2
+	data/aufgabe3
 
 build:
 	mkdir -p build
