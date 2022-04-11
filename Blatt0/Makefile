@@ -5,11 +5,6 @@ aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
 	g++ -o3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
 	g++ -o3 -Wall -ffast-math aufgabe3.cpp -o data/aufgabe3
 
-code:
-	data/aufgabe1
-	data/aufgabe2
-	data/aufgabe3
-
 blatt0.pdf: FORCE | build
 	  TEXINPUTS=build: \
 	  BIBINPUTS=build: \
@@ -20,6 +15,11 @@ blatt0.pdf: FORCE | build
 	  --interaction=nonstopmode \
 	  --halt-on-error \
 	blatt0.tex
+
+code:
+	data/aufgabe1
+	data/aufgabe2
+	data/aufgabe3
 
 build:
 	mkdir -p build
