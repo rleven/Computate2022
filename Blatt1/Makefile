@@ -1,11 +1,11 @@
-all: build/aufgaben build/main.pdf
+all: aufgaben main.pdf
 
-build/aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
-	g++ -o3 -Wall -ffast-math -march=native aufgabe1.cpp -o data/aufgabe1
-	g++ -o3 -Wall -ffast-math -march=native aufgabe2.cpp -o data/aufgabe2
-	g++ -o3 -Wall -ffast-math -march=native aufgabe3.cpp -o data/aufgabe3
+aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
+	g++ -o3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
+	g++ -o3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
+	g++ -o3 -Wall -ffast-math aufgabe3.cpp -o data/aufgabe3
 
-build/main.pdf: FORCE | build
+main.pdf: FORCE | build
 	  TEXINPUTS=build: \
 	  BIBINPUTS=build: \
 	  max_print_line=1048576 \
@@ -15,6 +15,11 @@ build/main.pdf: FORCE | build
 	  --interaction=nonstopmode \
 	  --halt-on-error \
 	main.tex
+
+code: data/aufgabe1 data/aufgabe2 data/aufgabe3
+	data/./aufgabe1
+	data/./aufgabe2
+	data/./aufgabe3
 
 build:
 	mkdir -p build
