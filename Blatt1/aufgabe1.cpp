@@ -34,20 +34,40 @@ float vierpunkt (Function fun, float x, float h)
 
 int main(){
     /* Definitions of variables */
-    float x;
-    x = 0;
+    float x_value;
+    x_value = M_PI;
+
     /* Set output files */
-    ofstream teil_a, teil2, teil3;
-    teil_a.open("data/teil_a.txt", ios_base::app);
+    ofstream teil_a1, teil_a2, teil_b1, teil_b2;
+    teil_a1.open("data/teil_a1.txt", ios_base::trunc);
+    teil_a2.open("data/teil_a2.txt", ios_base::trunc);
+    teil_b1.open("data/teil_b1.txt", ios_base::trunc);
+    teil_b2.open("data/teil_b2.txt", ios_base::trunc);
     
-    teil_a << "#h    y";
+    teil_a1 << "#h    y";
     
-    for (float h = 0.1; h<30; h = h+0.1) {
-    teil_a << "\n" << h << "," << zweipunkt(f_1,x,h);
+    for (float h = pow(10,-3); h<0.1; h = h+0.00001) {
+    teil_a1 << "\n" << h << "," << zweipunkt(f_1,x_value,h);
     }
 
+    float h_value;
+    h_value = pow(10,-2);
+
+    teil_a1 << "#h    y    delta_y";
+
+    for (float x = -M_PI ; x <= M_PI; x = x + 0.01) {
+    teil_a2 << "\n" << x << "," << zweipunkt(f_1,x,h_value) << "," << abs(cos(x)-zweipunkt(f_1,x,h_value));
+    }
+
+    /*Aufgabenteil b*/
+
+    
+
     /* Closing files */
-    teil_a.close();
+    teil_a1.close();
+    teil_a2.close();
+    teil_b1.close();
+    teil_b2.close();
 
 
     return 0;

@@ -16,17 +16,21 @@ main.pdf: FORCE | build
 	  --halt-on-error \
 	main.tex
 
-code:
+code: aufgaben | build
 	data/aufgabe1
 	data/aufgabe2
 	data/aufgabe3
 
+plot: code | build
+	python plots.py
+
 build:
 	mkdir -p build
 	mkdir -p data
+	mkdir -p plots
 
 clean:
-	rm -rf build data
+	rm -rf build data plots
 
 FORCE:
 
