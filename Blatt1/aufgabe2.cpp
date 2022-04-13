@@ -12,6 +12,8 @@ double f(double x){
 /* Here we define a passing of a function */
 typedef double (*function) (double);
 
+//a)
+
 /* This function iterates and saves according to the Trapezoidal rule */
 double trapez(function blank, double a, double b, int N){
 
@@ -35,6 +37,8 @@ double trapez(function blank, double a, double b, int N){
     return integration*(h/2);
 }
 
+//b)
+
 /* This function iterates and saves according to the Midpoint rule */
 double midpoint(function blank, double a, double b, int N){
 
@@ -57,6 +61,9 @@ double midpoint(function blank, double a, double b, int N){
     return integration*h;
 }
 
+//c)
+
+/* This function iterates and saves according to the Midpoint rule */
 double simpson(function blank, double a, double b, int N){
 
     /* Calculation of the step size h and initial values of the integration */
@@ -86,8 +93,5 @@ double simpson(function blank, double a, double b, int N){
 }
 
 int main(){
-    cout << trapez(f, 10, 15, 100) << endl;
-    cout << midpoint(f, 10, 15, 100) << endl;
-    cout << simpson(f, 10, 15, 100) << endl;
     return 0;
 }
