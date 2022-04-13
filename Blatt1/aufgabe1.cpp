@@ -4,32 +4,34 @@
 #include <fstream>
 using namespace std;
 
-float f_1 (float x)
+float f_1(float x)
 {
     return sin(x);
 }
 
-float f_2 (float x)
+float f_2(float x)
 {
-    if (x >= 0){
-        return 2*floor(x/M_PI) - cos(fmod( x, M_PI )) + 1;
+    if (x >= 0)
+    {
+        return 2*floor(x/M_PI) - cos(fmod(x, M_PI)) + 1;
     }
-    else{
-        return 2*floor(x/M_PI) + cos(fmod( x, M_PI )) + 1;
+    else
+    {
+        return 2*floor(x/M_PI) + cos(fmod(x, M_PI)) + 1;
     }
 
 }
 
-typedef float (*Function) (float);
+typedef float (*Function)(float);
 
-float zweipunkt (Function fun, float x, float h)
+float zweipunkt(Function fun, float x, float h)
 {
-    return (fun(x+h)-fun(x-h))/(2*h);
+    return (fun(x+h) - fun(x-h)) / (2*h);
 }
 
-float vierpunkt (Function fun, float x, float h)
+float vierpunkt(Function fun, float x, float h)
 {
-    return (-fun(x+2*h) +8*fun(x+h) -8*fun(x-h) +fun(x-2*h))/(12*h);
+    return (-fun(x+2*h) + 8*fun(x+h) - 8*fun(x-h) + fun(x-2*h)) / (12*h);
 }
 
 int main(){
@@ -46,17 +48,19 @@ int main(){
     
     teil_a1 << "#h    y";
     
-    for (float h = pow(10,-3); h<0.1; h = h+0.00001) {
-    teil_a1 << "\n" << h << "," << zweipunkt(f_1,x_value,h);
+    for (float h = pow(10, -3); h<0.1; h = h+0.00001)
+    {
+        teil_a1 << "\n" << h << "," << zweipunkt(f_1, x_value, h);
     }
 
     float h_value;
-    h_value = pow(10,-2);
+    h_value = pow(10, -2);
 
-    teil_a1 << "#h    y    delta_y";
+    teil_a2 << "#h    y    delta_y";
 
-    for (float x = -M_PI ; x <= M_PI; x = x + 0.01) {
-    teil_a2 << "\n" << x << "," << zweipunkt(f_1,x,h_value) << "," << abs(cos(x)-zweipunkt(f_1,x,h_value));
+    for (float x = -M_PI; x <= M_PI; x = x + 0.01)
+    {
+        teil_a2 << "\n" << x << "," << zweipunkt(f_1, x, h_value) << "," << (cos(x) - zweipunkt(f_1, x, h_value));
     }
 
     /*Aufgabenteil b*/

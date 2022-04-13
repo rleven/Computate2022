@@ -1,15 +1,45 @@
 \newpage
 \section{Aufgabe 1: Numerische Differentiation}
-\label{sec:auf1}
+  \label{sec:auf1}
+  Die numerische Ableitung mit Hilfe der Zweipunkt- und der Vierpunktregel
+  \begin{align}
+    f'_{\mathrm{Zweipunkt}}(x,h) &= \frac{f(x+h) - f(x-h)}{2h} \\[10pt]
+    f'_{\mathrm{Vierpunkt}}(x,h) &= \frac{-f(x+2h) + 8f(x+h) - 8f(x-h) - f(x-2h)}{12h}
+  \end{align}
+  soll anhand der folgenden beiden Funktionen untersucht werden.
+  \begin{align}
+    \label{eqn:aufgabe1funktion1}
+    f_1(x) &= \sin(x)\\[2pt]
+    \label{eqn:aufgabe1funktion2}
+    f_2(x) &= \left\{
+      \begin{matrix}
+        2\cdot \lfloor\frac{x}{\pi} \rfloor -\cos(x \;\;\text{mod}\;\; \pi) + 1 \quad \text{für} \quad x \geq 0 \\[5pt]
+        2\cdot \lfloor\frac{x}{\pi} \rfloor +\cos(x \;\;\text{mod}\;\; \pi) + 1 \quad \text{für} \quad x < 0
+      \end{matrix}
+      \right.
+  \end{align}
 
-\begin{align}
-  f_1(x) &= \sin(x)\\
-  f_2(x) &= \left\{
-    \begin{matrix}
-    2\cdot \lfloor\frac{x}{\pi} \rfloor -\cos(x\mod \pi) + 1 \text{ für } x \leq 0\\
-    2\cdot \lfloor\frac{x}{\pi} \rfloor +\cos(x\mod \pi) + 1 \text{ für } x < 0
-    \end{matrix}
-    \right.
-\end{align}
+  \subsection{a)}
+    In dieser Teilaufgabe sollte die Zweipunktregel an der Funktion \ref{eqn:aufgabe1funktion1} untersucht werden.
+    Dazu wurde die Ableitung $f'_1(x_1)$ mithilfe der Zweipunktregel an einer willkürlich ausgesuchten Stelle $x_1 = \pi$ berechnet, wobei die Schrittweite $h$ von $10^{-3}$ bis $10^{-1}$ variiert wurde.
+    In \autoref{fig:aufgabe1_a1} ist die numerisch bestimmte Ableitung $f'_{\mathrm{1,Zweipunkt}}(\pi)$ als auch der tatsächliche Wert der Ableitung $f'_1(\pi) = -1$ gegen die Schrittweite aufgetragen, sodass die beiden Werte verglichen werden können.
+    
+    \begin{figure}[ht]
+      \center
+      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_a1.pdf}
+      \caption{Die numerische und tatsächliche Wert der Ableitung $f'_1(\pi)$ sind hier dargestellt und gegen $h$ aufgetragen.}
+      \label{fig:aufgabe1_a1}
+    \end{figure}
 
-%\subsection{a) Berechnen Sie numerisch an geeigneter Stelle die erste Ableitung von $f_1(x)$ nach der Zweipunkt-Regel. Stellen Sie den Wert der Ableitung in Abhängigkeit von der Schrittweite $h$ graphisch dar und treffen Sie eine geeignete Wahl für $h$. Stellen Sie den Fehler $\delta f_{1,Zweipunkt}'(x)$ zum 1,Zweipunkt analytischen Resultat auf dem Intervall $[−\pi, +\pi]$ graphisch dar.}
+    Links im Graphen ist der Fehler durch die Auslöschung bei zu kleinem $h$ und rechts der Abbruchfehler bei zu großem $h$ zu erkennen.
+    Für die weiterführenden Rechnungen wird $h = 10^{-2}$ gewählt.
+
+    In \autoref{fig:aufgabe1_a2} wird der absolute Fehler, der mit der Zweipunktregel bestimmten, numerischen von der analytischen Ableitung $\Delta f'_{\mathrm{1,Zweipunkt}}(x) = f'_1(x) - f'_{\mathrm{1,Zweipunkt}}(x)$ im Intervall $x \in [-\pi, \pi]$ dargestellt.
+    Es ist zu erkennen, dass der Fehler der Form eines Cosinus folgt.
+
+    \begin{figure}[ht]
+      \center
+      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_a2.pdf}
+      \caption{Der Fehler zwischen der mit der Zweipunktregel bestimmten numerischen und tatsächlichen Ableitung $f'_1(\pi)$ sind hier dargestellt und im Intervall $[-\pi, \pi]$ gegen $x$ aufgetragen.}
+      \label{fig:aufgabe1_a2}
+    \end{figure}
