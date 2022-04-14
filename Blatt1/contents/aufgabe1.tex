@@ -22,24 +22,56 @@
   \subsection{a)}
     In dieser Teilaufgabe sollte die Zweipunktregel an der Funktion \ref{eqn:aufgabe1funktion1} untersucht werden.
     Dazu wurde die Ableitung $f'_1(x_1)$ mithilfe der Zweipunktregel an einer willkürlich ausgesuchten Stelle $x_1 = \pi$ berechnet, wobei die Schrittweite $h$ von $10^{-3}$ bis $10^{-1}$ variiert wurde.
-    In \autoref{fig:aufgabe1_a1} ist die numerisch bestimmte Ableitung $f'_{\mathrm{1,Zweipunkt}}(\pi)$ als auch der tatsächliche Wert der Ableitung $f'_1(\pi) = -1$ gegen die Schrittweite aufgetragen, sodass die beiden Werte verglichen werden können.
+    In \autoref{fig:aufgabe1_a1} ist die numerisch bestimmte Ableitung $f'_{\mathrm{1,Zweipunkt}}(\pi)$ als auch der tatsächliche Wert der Ableitung $f'_1(\pi) = -1$ gegen die Schrittweite aufgetragen, sodass die beiden Werte verglichen und die Schrittweite, wo sie sich am nächsten sind abgelesen werden kann.
     
     \begin{figure}[ht]
-      \center
-      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_a1.pdf}
+      \centering
+      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_a1.pdf} \vspace*{-0.6cm}
       \caption{Die numerische und tatsächliche Wert der Ableitung $f'_1(\pi)$ sind hier dargestellt und gegen $h$ aufgetragen.}
       \label{fig:aufgabe1_a1}
     \end{figure}
+    \FloatBarrier
 
     Links im Graphen ist der Fehler durch die Auslöschung bei zu kleinem $h$ und rechts der Abbruchfehler bei zu großem $h$ zu erkennen.
     Für die weiterführenden Rechnungen wird $h = 10^{-2}$ gewählt.
 
     In \autoref{fig:aufgabe1_a2} wird der absolute Fehler, der mit der Zweipunktregel bestimmten, numerischen von der analytischen Ableitung $\Delta f'_{\mathrm{1,Zweipunkt}}(x) = f'_1(x) - f'_{\mathrm{1,Zweipunkt}}(x)$ im Intervall $x \in [-\pi, \pi]$ dargestellt.
-    Es ist zu erkennen, dass der Fehler der Form eines Cosinus folgt.
+    Es ist zu erkennen, dass der Fehler der Form der Ableitung also einem Cosinus gleicht.
 
     \begin{figure}[ht]
-      \center
-      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_a2.pdf}
-      \caption{Der Fehler zwischen der mit der Zweipunktregel bestimmten numerischen und tatsächlichen Ableitung $f'_1(\pi)$ sind hier dargestellt und im Intervall $[-\pi, \pi]$ gegen $x$ aufgetragen.}
+      \centering
+      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_a2.pdf} \vspace*{-0.6cm}
+      \caption{Der Fehler zwischen der mit der Zweipunktregel bestimmten numerischen und tatsächlichen Ableitung $f'_1(x) = \cos(x)$ ist hier dargestellt und im Intervall $[-\pi, \pi]$ gegen $x$ aufgetragen.}
       \label{fig:aufgabe1_a2}
     \end{figure}
+    \FloatBarrier
+
+  \subsection{b)}
+    Hier wurde die doppelte Zweipunktregel zur Bestimmung der zweichten Ableitung an der Funktion \ref{eqn:aufgabe1funktion1} untersucht.
+    \begin{equation}
+      f''_{\mathrm{Zweipunkt}}(x) = \frac{f(x+h) - 2f(x) + f(x-h)}{h^2}
+    \end{equation}
+    Es wurde analog zu Aufgabenteil a) verfahren. \\
+    Die zweite Ableitung $f''_1(x_1)$ wurde wieder an einer willkürlich ausgesuchten Stelle $x_1 = \pi / 2$ berechnet, wobei die Schrittweite $h$ von $10^{-3}$ bis $1$ variiert wurde.
+    In \autoref{fig:aufgabe1_b1} wurde die Schrittweite $h = 5 \cdot 10^{-2}$ per Augenmaß abgelesen.
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_b1.pdf} \vspace*{-0.6cm}
+      \caption{Die numerische und tatsächliche Wert der Ableitung $f''_1(\pi)$ sind hier dargestellt und gegen $h$ aufgetragen.}
+      \label{fig:aufgabe1_b1}
+    \end{figure}
+    \FloatBarrier
+
+    In \autoref{fig:aufgabe1_b2} wird der absolute Fehler von der analytischen Ableitung $\Delta f'_{\mathrm{1,Zweipunkt}}(x) = f''_1(x) - f''_{\mathrm{1,Zweipunkt}}(x)$ im Intervall $x \in [-\pi, \pi]$ dargestellt. \\
+    Auch hier ist deutlich zu erkennen, dass der Fehler der Form der zweiten Ableitung $f''_1(x) = -\sin(x)$ hat.
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_b2.pdf} \vspace*{-0.6cm}
+      \caption{Der Fehler zwischen der numerisch und analytisch bestimmten zweiten Ableitung ist hier dargestellt und im Intervall $[-\pi, \pi]$ gegen $x$ aufgetragen.}
+      \label{fig:aufgabe1_b2}
+    \end{figure}
+    \FloatBarrier
+
+
