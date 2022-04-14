@@ -5,10 +5,10 @@
 using namespace std;
 
 /* Here we define a passing of a function */
-typedef double (*function) (double);
+typedef double (*Function) (double);
 
 /* This function iterates and saves according to the Trapezoidal rule */
-double trapez(function blank, double a, double b, int N){
+double trapez(Function blank, double a, double b, int N){
 
     /* Calculation of the step size h and initial values of the integration */
     double h = (b -a)/N;
@@ -25,7 +25,7 @@ double trapez(function blank, double a, double b, int N){
 }
 
 /* This function iterates and saves according to the Midpoint rule */
-double midpoint(function blank, double a, double b, int N){
+double midpoint(Function blank, double a, double b, int N){
 
     /* Calculation of the step size h and initial values of the integration */
     double h=(b-a)/N;
@@ -41,7 +41,7 @@ double midpoint(function blank, double a, double b, int N){
 }
 
 /* This function iterates and saves according to the Midpoint rule */
-double simpson(function blank, double a, double b, int N){
+double simpson(Function blank, double a, double b, int N){
 
     /* Calculation of the step size h and initial values of the integration */
     double h = (b-a)/N;
