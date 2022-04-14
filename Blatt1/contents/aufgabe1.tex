@@ -27,7 +27,7 @@
     \begin{figure}[ht]
       \centering
       \includegraphics[width=0.65\textwidth]{plots/aufgabe1_a1.pdf} \vspace*{-0.6cm}
-      \caption{Die numerische und tatsächliche Wert der Ableitung $f'_1(\pi)$ sind hier dargestellt und gegen $h$ aufgetragen.}
+      \caption{Der numerische und tatsächliche Wert der Ableitung $f'_1(\pi)$ sind hier dargestellt und gegen $h$ aufgetragen.}
       \label{fig:aufgabe1_a1}
     \end{figure}
     \FloatBarrier
@@ -47,24 +47,24 @@
     \FloatBarrier
 
   \subsection{b)}
-    Hier wurde die doppelte Zweipunktregel zur Bestimmung der zweichten Ableitung an der Funktion \ref{eqn:aufgabe1funktion1} untersucht.
+    Hier wurde die doppelte Zweipunktregel zur Bestimmung der zweiten Ableitung an der Funktion \ref{eqn:aufgabe1funktion1} untersucht.
     \begin{equation}
       f''_{\mathrm{Zweipunkt}}(x) = \frac{f(x+h) - 2f(x) + f(x-h)}{h^2}
     \end{equation}
     Es wurde analog zu Aufgabenteil a) verfahren. \\
     Die zweite Ableitung $f''_1(x_1)$ wurde wieder an einer willkürlich ausgesuchten Stelle $x_1 = \pi / 2$ berechnet, wobei die Schrittweite $h$ von $10^{-3}$ bis $1$ variiert wurde.
-    In \autoref{fig:aufgabe1_b1} wurde die Schrittweite $h = 5 \cdot 10^{-2}$ per Augenmaß abgelesen.
+    In \autoref{fig:aufgabe1_b1} wurde die Schrittweite $h = 7 \cdot 10^{-2}$ per Augenmaß abgelesen.
     
     \begin{figure}[H]
       \centering
       \includegraphics[width=0.65\textwidth]{plots/aufgabe1_b1.pdf} \vspace*{-0.6cm}
-      \caption{Die numerische und tatsächliche Wert der Ableitung $f''_1(\pi)$ sind hier dargestellt und gegen $h$ aufgetragen.}
+      \caption{Der numerische und tatsächliche Wert der zweiten Ableitung $f''_1(\pi/2)$ sind hier dargestellt und gegen $h$ aufgetragen.}
       \label{fig:aufgabe1_b1}
     \end{figure}
     \FloatBarrier
 
     In \autoref{fig:aufgabe1_b2} wird der absolute Fehler von der analytischen Ableitung $\Delta f'_{\mathrm{1,Zweipunkt}}(x) = f''_1(x) - f''_{\mathrm{1,Zweipunkt}}(x)$ im Intervall $x \in [-\pi, \pi]$ dargestellt. \\
-    Auch hier ist deutlich zu erkennen, dass der Fehler der Form der zweiten Ableitung $f''_1(x) = -\sin(x)$ hat.
+    Auch hier ist deutlich zu erkennen, dass der Fehler der Form der zweiten Ableitung $f''_1(x) = -\sin(x)$ entspricht.
 
     \begin{figure}[H]
       \centering
@@ -74,4 +74,73 @@
     \end{figure}
     \FloatBarrier
 
+    Die Fehler der ersten und zweiten Ableitung besitzen beide die Formen der jeweiligen Ableitung.
 
+  \subsection{c)}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_c1.pdf} \vspace*{-0.6cm}
+      \caption{Der numerische und tatsächliche Wert der Ableitung $f'_1(\pi)$ sind hier dargestellt und gegen $h$ aufgetragen.}
+      \label{fig:aufgabe1_c1}
+    \end{figure}
+    \FloatBarrier
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.65\textwidth]{plots/aufgabe1_c2.pdf} \vspace*{-0.6cm}
+      \caption{Der Fehler zwischen der numerisch und analytisch bestimmten Ableitung ist hier dargestellt und im Intervall $[-\pi, \pi]$ gegen $x$ aufgetragen.}
+      \label{fig:aufgabe1_c2}
+    \end{figure}
+    \FloatBarrier
+    
+    In \autoref{fig:aufgabe1_c2} wurde die Schrittweite $h = 0,15$ gewählt, sodass der Fehler in der selben Größenordnung liegt wie in \autoref{fig:aufgabe1_a2} für die Zweipunktregel.
+    Das zeigt, dass die Vierpunktregel erst bei viel größeren Schrittweiten einen genauso großen Fehler aufweist wie die Zweipunktregel.
+    Für dieses Beispiel ist also die Vierpunktregel genauer.
+
+  \subsection{d)}
+    Nun sollte der selbe Vergleich zwischen Zwei- und Vierpunktregel an der 2. Funktion durchgeführt werden, wie schon in Teilaufgabe a) und c).
+    Die Ableitung von \ref{eqn:aufgabe1funktion2} ist gegeben als
+    \begin{equation}
+      f_2'(x) = \left\{
+        \begin{matrix}
+          \sin(x \;\;\text{mod}\;\; \pi) \quad \text{für} \quad x \geq 0 \\[2pt]
+          -\sin(x \;\;\text{mod}\;\; \pi) \quad \text{für} \quad x < 0
+        \end{matrix}
+      \right.
+    \end{equation}
+    
+    \begin{figure}[ht]
+      \centering
+      \begin{subfigure}{0.49\textwidth}
+          \includegraphics[width=\textwidth]{plots/aufgabe1_d1.pdf} \vspace*{-0.6cm}
+          \caption{Auswahl der Schrittweite $h$ für die Zweipunktregel.}
+          \label{fig:aufgabe1_d1}
+      \end{subfigure}
+      \hfill
+      \begin{subfigure}{0.49\textwidth}
+          \includegraphics[width=\textwidth]{plots/aufgabe1_d3.pdf} \vspace*{-0.6cm}
+          \caption{Auswahl der Schrittweite $h$ für die Vierpunktregel.}
+          \label{fig:aufgabe1_d3}
+      \end{subfigure}
+      
+  \end{figure}
+  
+  \FloatBarrier
+
+  \begin{figure}[ht]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{plots/aufgabe1_d2.pdf} \vspace*{-0.6cm}
+        \caption{Fehler für die Zweipunktregel.}
+        \label{fig:aufgabe1_d2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{plots/aufgabe1_d3.pdf} \vspace*{-0.6cm}
+        \caption{Fehler für die Vierpunktregel.}
+        \label{fig:aufgabe1_d4}
+    \end{subfigure}
+    
+  \end{figure}
+
+\FloatBarrier
