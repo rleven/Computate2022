@@ -1,2 +1,44 @@
+\newpage
 \section{Aufgabe 3: Eindimensionale Integrale}
 \label{sec:auf3}
+
+Bei dieser Aufgabe sollten zwei Integrale numerisch mit Trapezregel, Mittelpunktsregel und Simpsonregel berechnet werden.
+
+\subsection{a)}
+Das gegebene Integral mit der Form
+\begin{equation}
+    I_1 = \int_1^{100}\frac{exp(-x)}{x}dx
+    \label{eq:auf3a}
+\end{equation}
+wurde jeweils für unterschiedliche Intervallbreiten $h$, beziehungsweise unterschiedlicher Anzahl an Intervallen $N$, mittels der drei Regeln ausgewertet.\\
+Die Ergebnisse sind dabei in den Textdateien trapez\_a.txt, midpoint\_a.txt und simpson\_a.txt gespeichert worden.
+Wie in der Aufgabenstellung angegeben, wurden die Intervallbreiten halbiert bis ein relativer Fehler von $<10^{-4}$ zur vorherigen Iteration bestand.\\
+In den cpp-Funktionen wurde die Anzahl der Intervalle $N$ übergeben, sodass diese zur Halbierung von $h$ verdoppelt werden mussten.\\
+Hieraus ergab sich der Plot aus \autoref{fig:aufgabe3_a}.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.7]{plots/aufgabe3a.pdf}
+    \caption{In diesem Graphen sind die Verläufe der drei numerischen Regeln für die Integration \ref{eq:auf3a} dargestellt.
+    Es ist zu sehen, wie die Trapezregel und Simpsonregel ähnlich schnell ansteigen, die Mittelpunktsregel jedoch mit größeren Intervallsbreiten das genauere Ergebnis produziert.}
+    \label{fig:aufgabe3_a}
+\end{figure}
+Die Trapez- und Simpsonregel sind erkennbar im selben Bereich und nähern sich dem analytischen Ergebnis langsamer als die Mittelpunktsregel.
+
+\subsection{b)}
+Das gegebene Integral der Form
+\begin{equation}
+    I_2 = \int_0^1 x sin(\frac{1}{x})dx
+    \label{eq:auf3b}
+\end{equation}
+wurde wie im Aufgabenteil a) numerisch berechnet.\\
+Auch hier befinden sich die Ergebnisse in den Textdateien trapez\_b.txt, midpoint\_b.txt und simpson\_b.txt.
+Aus diesen Daten ergab sich der Plot aus \autoref{fig:aufgabe3_b}.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.7]{plots/aufgabe3b.pdf}
+    \caption{In diesem Graphen sind die Verläufe der drei numerischen Regeln für die Integration \ref{eq:auf3b} dargestellt.
+    Es ist zu sehen, wie die Trapezregel sowie Mittelpunktsregel und Simpsonregel ähnlich schnell gegen den analytischen Wert gehen. Nur bei hohen Intervallbreiten gibt es deutliche Unterschiede.}
+    \label{fig:aufgabe3_b}
+\end{figure}
+Laut dem Graphen konvergieren alle drei Regeln ähnlich schnell zum analytischen Wert.\\
+Äquivalent zu Aufgabenteil a) wurde auch hier die Intervallbreite bis zu einem relativen Fehler von $<10^{-4}$ halbiert.

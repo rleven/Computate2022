@@ -4,9 +4,7 @@
 #include <fstream>
 using namespace std;
 
-/* first function */
-float f_1(float x)
-{
+float f_1(float x){
     return sin(x);
 }
 
@@ -16,6 +14,7 @@ float f_2(float x)
     if (x >= 0)
     {
         return 2*floor(x/M_PI) - cos(fmodf(x, M_PI)) + 1;
+
     }
     else
     {
@@ -35,22 +34,17 @@ float f_2_ableitung(float x)
     {
         return -sin(fmod(x, M_PI));
     }
-
 }
 
 /* here we define a passing of a function */
 typedef float (*Function)(float);
 
-/* the two-point-rule for derivation is implemented */
-float zweipunkt(Function fun, float x, float h)
-{
-    return (fun(x+h) - fun(x-h)) / (2*h);
+float zweipunkt(Function fun, float x, float h){
+    return (fun(x+h)-fun(x-h))/(2*h);
 }
 
-/* the four-point-rule for derivation is implemented */
-float vierpunkt(Function fun, float x, float h)
-{
-    return (-fun(x+2*h) + 8*fun(x+h) - 8*fun(x-h) + fun(x-2*h)) / (12*h);
+float vierpunkt(Function fun, float x, float h){
+    return (-fun(x+2*h) +8*fun(x+h) -8*fun(x-h) +fun(x-2*h))/(12*h);
 }
 
 /* the twofold two-point-rule for the second derivative is implemented */
