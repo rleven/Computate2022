@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 h, f = np.genfromtxt("data/teil_a1.txt", comments = "#", delimiter = ',', unpack=True)
 
 plt.plot(h, f, '-k', label="Approximation")
-plt.hlines(np.cos(2), 10**(-3), 0.1, colors = 'blue', linestyles = 'dotted', label= 'Wahrer Wert')
+plt.hlines(np.cos(np.pi), 10**(-3), 0.1, colors = 'blue', linestyles = 'dotted', label= 'Wahrer Wert')
 plt.xlabel("h")
 plt.ylabel(r"f'$_{\mathrm{1,Zweipunkt}}(\pi)$")
 plt.xscale('log')

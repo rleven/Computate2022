@@ -1,9 +1,9 @@
 all: aufgaben main.pdf
 
 aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
-	g++ -o3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
-	g++ -o3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
-	g++ -o3 -Wall -ffast-math aufgabe3.cpp -o data/aufgabe3
+	g++ -O3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
+	g++ -O3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
+	g++ -O3 -Wall -ffast-math aufgabe3.cpp -o data/aufgabe3
 
 main.pdf: FORCE | build
 	  TEXINPUTS=build: \
