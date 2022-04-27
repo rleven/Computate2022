@@ -72,6 +72,10 @@ int main(){
         double check = std::abs(aufb-wahr)/wahr;
         if (check<std::pow(10, -5)){
             std::cout << "Wert: " << aufb << " bei i " << i << std::endl;
+            break;
+        }
+        else if (i < 50) {
+            break;
         }
     }
 
