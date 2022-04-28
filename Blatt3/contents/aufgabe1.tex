@@ -1,3 +1,67 @@
 \newpage
 \section{Aufgabe 1: }
 \label{sec:auf1}
+  Das hier behandelte Beispiel stellt einen gedämpften harmonischen Oszillator der Form
+  \begin{equation}
+      \ddot{x} + 2 \beta \dot{x} + \omega_0^2 x = 0
+  \end{equation}
+  dar.
+  Dabei ist die Dämpfungskonstante als $\beta = \alpha / 2$ und die Eigenfrequenz als $\omega_0^2 = \sqrt{k/m} = 1$ gegeben.
+  $k$ und $m$ sind also gleich und werden im Folgenden gleich $1$ gesetzt.
+  Das heißt, dass in der Teilaufgabe c) die Gesamtenergie wie folgt angegeben werden kann, wenn angenommen wird, dass $E_{\mathrm{ges}} = \mathrm{const.}$ gilt:
+  \begin{align}
+      E_{\mathrm{kin}} + E_{\mathrm{pot}} &= E_{\mathrm{ges}} \\[3pt]
+      \frac{1}{2} m \dot{x}^2 - \frac{1}{2} k x^2 &= \mathrm{const.} \\
+      \dot{x}^2 - x^2 &= \mathrm{const.}
+      \label{eqn:gesamtenergie}
+  \end{align}
+
+\subsection*{a)}
+  \begin{figure}[ht]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+      \includegraphics[width=\textwidth]{plots/aufgabe1_adams_minus1.pdf} \vspace*{-0.7cm}
+      \caption{Selbsterregende Schwingung}
+      \label{fig:aufgabe1_adams_minus1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+      \includegraphics[width=\textwidth]{plots/aufgabe1_a_0.pdf} \vspace*{-0.7cm}
+      \caption{Ungedämpfte Schwingung}
+      \label{fig:aufgabe1_a_0}
+    \end{subfigure}
+    \begin{subfigure}{0.49\textwidth}
+      \includegraphics[width=\textwidth]{plots/aufgabe1_a_1.pdf} \vspace*{-0.7cm}
+      \caption{Aperiodischer Grenzfall}
+      \label{fig:aufgabe1_a_1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+      \includegraphics[width=\textwidth]{plots/aufgabe1_a_2.pdf} \vspace*{-0.7cm}
+      \caption{Kriechfall}
+      \label{fig:aufgabe1_a_2}
+    \end{subfigure}
+    
+    \label{fig:aufgabe1_a}    
+
+  \end{figure}
+\FloatBarrier
+
+In \autoref{fig:aufgabe1_a} sind die vier Grenzverhalten der Lösung der gegebenen DGL dargestellt.
+
+\subsection*{b)}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{plots/aufgabe1_adams_energieerhaltung.pdf} \vspace*{-0.6cm}
+    \caption{Die Gesamtenergie ist gegen die Zeit aufgetragen.}
+    \label{fig:aufgabe1_adams_energieerhaltung}
+  \end{figure}
+  \FloatBarrier
+
+  Die Gesamtenergie wird über \autoref{eqn:gesamtenergie} berechnet.
+  Die Energieerhaltung ist nicht gegeben, da der Dämpfungsterm in der Gleichung enthalten ist. Darüber wird Energie an das dämpfende Element abgegeben und die Gesamtenergie vermindert sich mit der Zeit.
+
+\subsection*{c)}
+  Die Laufzeitanalyse gibt etwa vier Mal so große Werte für das Runge-Kutta Verfahren aus, als für das Adams-Bashforth-Moulton Verfahren.
+  Das liegt daran, dass das erstere die Funktion f(), in der die eigentliche Rechnung ausgeführt wird, vier Mal aufgerufen und in der letzteren nur ein Mal.
+
