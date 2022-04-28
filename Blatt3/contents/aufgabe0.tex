@@ -1,4 +1,19 @@
 \setcounter{secnumdepth}{0}
 \section{Aufgabe 0: Verständnisfragen}
 \label{sec:auf0}
+\subsection*{a)}
+    Eine Möglichkeit wäre es, in jedem Schritt das benutzte Verfahren für eine größere und eine kleinere Schrittweite durchzuführen.
+    Die Differenz $\Delta y$ zwischen den beiden Werten wird dann als Fehlerabschätzung benutzt.
+    Mithilfe der dieser Abschätzungen lässt sich nun eine Regel befolgen, die aus Herrn Kierfelds Skript stammt. \\[0.5cm]
 
+    Wenn $\frac{|\Delta y|}{|\vec{y}|}$ kleiner einem gegebenen Fehler $\epsilon$ ist, dann verkleinere die Schrittweite $h$ zu $h' = h \left(\frac{\epsilon |\vec{y}|}{|\Delta y|}\right)^{1/n}$ und wiederhole den Schritt. \\[0.5cm]
+
+    Wenn $\frac{|\Delta y|}{|\vec{y}|}$ größer einem gegebenen Fehler $\epsilon$ ist, dann vergrößere die Schrittweite $h$ zu $h' = h \left(\frac{\epsilon |\vec{y}|}{|\Delta y|}\right)^{1/n}$ und mache den nächsten Schritt.
+    
+
+\subsection*{b)}
+    Die Schrittweite zu verkleinern ist generell sinnvoll, wenn die rechte Seite der DGL $\vec{f}$ sich nur schwach mit der Zeit ändert und die Schrittweite zu vergrößern ist generell sinnvoll, wenn die rechte Seite sich schnell ändert.
+
+    Die Schrittweitenanpassung bei $\vec{f}$ zu machen, wo keiner der beiden Fälle so richtig zutrifft wäre einfach Verschwendung von Ressourcen, je nachdem, wie groß die Zeitskala gewählt wird.
+
+    Aus diesem Grund wird in Teilaufgabe a) ein Verfahren beschrieben, welches bei jedem Schritt entscheidet, in welche Richtung die Schrittweite verändert werden soll.

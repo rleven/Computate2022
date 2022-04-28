@@ -11,9 +11,9 @@ double alpha;
 
 MatrixXd rk4(int N, double t_start, double t_end, VectorXd y_start, VectorXd f(double, VectorXd), std::string filename = "") 
 {
-    // // open file to save the computed values
-    // std::ofstream file_output;
-    // file_output.open(filename, std::ios_base::trunc);    
+    // open file to save the computed values
+    std::ofstream file_output;
+    file_output.open(filename, std::ios_base::trunc);    
 
     // declare and initialize the needed variables
     VectorXd k1, k2, k3, k4;
@@ -34,10 +34,10 @@ MatrixXd rk4(int N, double t_start, double t_end, VectorXd y_start, VectorXd f(d
 
     for (int n = 1; n <= N; n++)
     {
-        // // save the values in output file
-        // file_output << n << "   " << t << "   " << y.transpose() << std::endl;
-        // // save the values in a 2D-matrix
-        // y_matrix.row(n-1) = y;
+        // save the values in output file
+        file_output << n << "   " << t << "   " << y.transpose() << std::endl;
+        // save the values in a 2D-matrix
+        y_matrix.row(n-1) = y;
 
         // compute the runge-kutta scheme in 4th order for the nth step
         k1 = h * f(t, y);
@@ -58,9 +58,9 @@ MatrixXd rk4(int N, double t_start, double t_end, VectorXd y_start, VectorXd f(d
 
 MatrixXd adams_bashforth_moulton(int N, double t_start, double t_end, VectorXd y_start, VectorXd f(double, VectorXd), std::string filename = "")
 {
-    // // open file to save the computed values
-    // std::ofstream file_output;
-    // file_output.open(filename, std::ios_base::trunc);    
+    // open file to save the computed values
+    std::ofstream file_output;
+    file_output.open(filename, std::ios_base::trunc);    
 
     // declare and initialize the needed variables
     VectorXd v0, v1, v2, v3;
@@ -77,14 +77,14 @@ MatrixXd adams_bashforth_moulton(int N, double t_start, double t_end, VectorXd y
     v2 = v_start.row(2);
     v3 = v_start.row(3);
 
-    // // save the values in output file
-    // for(int i = 0; i <= 3; i++)
-    // {
-    //     file_output << i << "   " << t << "   " << v_start.row(i) << std::endl;
-    //     t += h;
-    // }
-    // // save the values in a 2D-matrix
-    // y_matrix.block(0, 0, 4, 2) = v_start;
+    // save the values in output file
+    for(int i = 0; i <= 3; i++)
+    {
+        file_output << i << "   " << t << "   " << v_start.row(i) << std::endl;
+        t += h;
+    }
+    // save the values in a 2D-matrix
+    y_matrix.block(0, 0, 4, 2) = v_start;
 
     for (int n = 4; n <= N; n++)
     {
@@ -98,10 +98,10 @@ MatrixXd adams_bashforth_moulton(int N, double t_start, double t_end, VectorXd y
         v1 = v0;
         v0 = f(t, y);
 
-        // // save the values in output file
-        // file_output << n << "   " << t << "   " << y.transpose() << std::endl;
-        // // save the values in a 2D-matrix
-        // y_matrix.row(n-1) = y;
+        // save the values in output file
+        file_output << n << "   " << t << "   " << y.transpose() << std::endl;
+        // save the values in a 2D-matrix
+        y_matrix.row(n-1) = y;
     }
 
     // file_output.close();
@@ -134,7 +134,9 @@ int main()
 
     /*a)*/
     MatrixXd y_matrix;
-    for(alpha = -1; alpha <= 2; alpha++)
+    alpha = -1;
+    y_matrix = adams_bashforth_moulton(N, t_start, t_end, y_start, f, "data/aufgabe1_adams_minus1.csv");
+    for(alpha = 0; alpha <= 2; alpha++)
     {
         y_matrix = adams_bashforth_moulton(N, t_start, t_end, y_start, f, "data/aufgabe1_adams_" + std::to_string(int(alpha)) + ".csv");
     }
@@ -145,31 +147,31 @@ int main()
 
     /*c)*/
 
-    //============Start der Zeitmessung============
-    double time1 = 0.0, tstart;
-    tstart = clock();
-    //=============================================
+    // //============Start der Zeitmessung============
+    // double time1 = 0.0, tstart;
+    // tstart = clock();
+    // //=============================================
 
-    MatrixXd m_adams = adams_bashforth_moulton(1e7, 0, 1e5, y_start, f, "Laufzeit_adams.csv");
+    // MatrixXd m_adams = adams_bashforth_moulton(1e7, 0, 1e5, y_start, f, "Laufzeit_adams.csv");
 
-    //============Ende der Zeitmessung============
-    time1 += clock() - tstart;
-    time1 = time1/CLOCKS_PER_SEC; //Berechnungszeit in Sekunden
-    std::cout << time1 << std::endl;
-    //=============================================
+    // //============Ende der Zeitmessung============
+    // time1 += clock() - tstart;
+    // time1 = time1/CLOCKS_PER_SEC; //Berechnungszeit in Sekunden
+    // std::cout << time1 << std::endl;
+    // //=============================================
 
-        //============Start der Zeitmessung============
-    double time2 = 0.0, tstart2;
-    tstart2 = clock();
-    //=============================================
+    //     //============Start der Zeitmessung============
+    // double time2 = 0.0, tstart2;
+    // tstart2 = clock();
+    // //=============================================
 
-    MatrixXd m_rk4 = rk4(1e7, 0, 1e5, y_start, f, "Laufzeit_rk4.csv");
+    // MatrixXd m_rk4 = rk4(1e7, 0, 1e5, y_start, f, "Laufzeit_rk4.csv");
 
-    //============Ende der Zeitmessung============
-    time2 += clock() - tstart2;
-    time2 = time2/CLOCKS_PER_SEC; //Berechnungszeit in Sekunden
-    std::cout << time2 << std::endl;
-    //=============================================
+    // //============Ende der Zeitmessung============
+    // time2 += clock() - tstart2;
+    // time2 = time2/CLOCKS_PER_SEC; //Berechnungszeit in Sekunden
+    // std::cout << time2 << std::endl;
+    // //=============================================
 
     return 0;
 }
