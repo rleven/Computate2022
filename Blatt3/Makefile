@@ -1,9 +1,8 @@
 all: aufgaben main.pdf
 
-aufgaben: aufgabe1.cpp aufgabe2.cpp aufgabe3.cpp | build
+aufgaben: aufgabe1.cpp aufgabe2.cpp | build
 	g++ -O3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
 	g++ -O3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
-	g++ -O3 -Wall -ffast-math aufgabe3.cpp -o data/aufgabe3
 
 main.pdf: FORCE | build
 	  TEXINPUTS=build: \
@@ -19,7 +18,6 @@ main.pdf: FORCE | build
 code: aufgaben | build
 	data/aufgabe1
 	data/aufgabe2
-	data/aufgabe3
 
 plot: code | build
 	python plots.py
