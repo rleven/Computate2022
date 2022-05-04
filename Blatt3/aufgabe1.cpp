@@ -41,11 +41,11 @@ MatrixXd rk4(int N, double t_start, double t_end, VectorXd y_start, VectorXd f(d
 
         // compute the runge-kutta scheme in 4th order for the nth step
         k1 = h * f(t, y);
-        k2 = h * f(t + h / 2., y + k1 / 2);
-        k3 = h * f(t + h / 2., y + k2 / 2);
+        k2 = h * f(t + h / 2., y + k1 / 2.);
+        k3 = h * f(t + h / 2., y + k2 / 2.);
         k4 = h * f(t + h, y + k3);
         
-        y += (k1 + 2 * k2 + 2 * k3 + k4) / 6;
+        y += (k1 + 2. * k2 + 2. * k3 + k4) / 6.;
         
         // preperation for the next step
         t += h;
@@ -64,7 +64,6 @@ MatrixXd adams_bashforth_moulton(int N, double t_start, double t_end, VectorXd y
 
     // declare and initialize the needed variables
     VectorXd v0, v1, v2, v3;
-    VectorXd y = y_start;
     MatrixXd y_matrix(N, 2);
 
     double h = (t_end - t_start) / N;
@@ -72,10 +71,12 @@ MatrixXd adams_bashforth_moulton(int N, double t_start, double t_end, VectorXd y
 
     // the first 4 values for the slope have to be calculated via another scheme (here runge-kutta of 4th order)
     MatrixXd v_start = rk4(4, t_start, t_end, y_start, f);
-    v0 = v_start.row(0);
-    v1 = v_start.row(1);
-    v2 = v_start.row(2);
-    v3 = v_start.row(3);
+    v0 = f(0, v_start.row(3));
+    v1 = f(0, v_start.row(2));
+    v2 = f(0, v_start.row(1));
+    v3 = f(0, v_start.row(0));
+    
+    VectorXd y = v_start.row(3);
 
     // save the values in output file
     for(int i = 0; i <= 3; i++)
@@ -89,7 +90,7 @@ MatrixXd adams_bashforth_moulton(int N, double t_start, double t_end, VectorXd y
     for (int n = 4; n <= N; n++)
     {
         // compute the adams scheme in for the nth step
-        y +=  h / 24 * (55 * v0 - 59 * v1 + 37 * v2 - 9 * v3);
+        y +=  h / 24. * (55. * v0 - 59. * v1 + 37. * v2 - 9. * v3);
         t += h;
 
         // preperation for the next step
@@ -134,12 +135,21 @@ int main()
 
     /*a)*/
     MatrixXd y_matrix;
+
     alpha = -1;
     y_matrix = adams_bashforth_moulton(N, t_start, t_end, y_start, f, "data/aufgabe1_adams_minus1.csv");
-    for(alpha = 0; alpha <= 2; alpha++)
+    
+    VectorXd alpha_vec(3);
+    alpha_vec << 0, 2, 3;
+    for(int i = 0; i < alpha_vec.size(); i++)
     {
+        alpha = alpha_vec(i);
         y_matrix = adams_bashforth_moulton(N, t_start, t_end, y_start, f, "data/aufgabe1_adams_" + std::to_string(int(alpha)) + ".csv");
     }
+    // for(alpha = 0; alpha <= 2; alpha++)
+    // {
+    //     y_matrix = adams_bashforth_moulton(N, t_start, t_end, y_start, f, "data/aufgabe1_adams_" + std::to_string(int(alpha)) + ".csv");
+    // }
 
     /*b)*/
     alpha = 0.1;
