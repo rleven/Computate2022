@@ -1,6 +1,6 @@
-all: aufgaben main.pdf
+all: data/aufgabe1 main.pdf
 
-aufgaben: aufgabe1.cpp | build
+data/aufgabe1: aufgabe1.cpp | build
 	g++ -O3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
 
 main.pdf: FORCE | build
@@ -14,7 +14,7 @@ main.pdf: FORCE | build
 	  --halt-on-error \
 	main.tex
 
-code: aufgaben | build
+code: data/aufgabe1 | build
 	data/aufgabe1
 
 plot: code | build
