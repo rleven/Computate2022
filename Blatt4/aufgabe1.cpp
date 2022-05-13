@@ -46,6 +46,6 @@ MatrixXd position(std::array<double, 16>(double), double L){
 }
 
 int main(){
-    speedyboys(30.0);
+    //speedyboys(30.0);
     return 0;
 }

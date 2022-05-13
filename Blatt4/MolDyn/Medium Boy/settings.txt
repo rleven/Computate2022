@@ -1,0 +1,4 @@
+T = 1  #Anfangstemperatur
+k_const = 1.38e-23 #Boltzmann Konstante
+t = 100  #Zeit
+h = 0.01    #Schrittweite

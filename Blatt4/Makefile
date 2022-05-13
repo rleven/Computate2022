@@ -18,7 +18,7 @@ code: data/aufgabe1 | build
 	data/aufgabe1
 
 plot: code | build
-	python plots.py
+	python moldyn.py
 
 build:
 	mkdir -p build

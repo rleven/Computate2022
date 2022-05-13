@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import tkinter as tk
+import csv
 
 from random import uniform
 
@@ -65,6 +66,8 @@ def hotness(speed):                                             #Berechnet die T
 
 def force(r1, r2):                                              #Berechnet die Teilchen r1 auf Teilchen r2 ausübt
     r = np.linalg.norm(r2 - r1)
+    if r == 0:
+        r = 1e-10
 
     K = 24 * (r**(-7) - r**(-13))
 
@@ -96,14 +99,42 @@ def potential(R):                                               #Berechnet die p
 
 
 
-def surrounding(r1, r2):                                        #Gibt die Kraft der zwei Teilchen aufeinander aus, wenn sie näher sind als r_c, sonst einen Nullvektor
+def surrounding(r1, r2):                                      #Gibt die Kraft der zwei Teilchen aufeinander aus, wenn sie näher sind als r_c
     r_c = L/2
-    r = np.linalg.norm(r2 - r1)
+    temp = np.zeros(2)
+    hor = 3
+    ver = 3
 
-    if r < r_c:
-        return force(r1, r2)
-    else:
-        return [0, 0]
+    if (r2 - r1)[0] > r_c:
+        if r2[0] < r1[0]:
+            r2[0] += L
+            hor = 0
+        if r2[0] > r1[0]:
+            r2[0] -= L
+            hor = 1
+    
+    if (r2 - r1)[1] > r_c:
+        if r2[1] < r1[1]:
+            r2[1] += L
+            ver = 0
+        if r2[1] > r1[1]:
+            r2[1] -= L
+            ver = 1
+
+    r = np.linalg.norm(r2 - r1)
+    if r <= r_c:
+        temp = force(r1, r2)
+    
+    if hor == 0:
+        r2[0] -= L
+    if hor == 1:
+        r2[0] += L
+    if ver == 0:
+        r2[1] -= L
+    if ver == 1:
+        r2[1] += L
+    
+    return temp
 
 
 
@@ -119,68 +150,120 @@ def darkforce(r1, R, runner):                                   #Zählt die Kraf
 
 
 
-def Verlett(h, t, R, V):                                        #Hier wird der Verlett-Algorithmus ausgeführt
+def Verlet(h, t, R, V):                                         #Hier wird der Verlett-Algorithmus ausgeführt
     N = int(t/h)
     A = np.zeros([2, 16])
     E_kin = np.zeros(N)
     swp = np.zeros([2, N])
+    E_pot = np.zeros(N)
 
     for i in range(N):
         E_kin[i] = Ekin(V)                                      #Sammelt die kinetische Energie des Systems über den Zeitraum t
-        swp[:, i] = SWP_V(V)
+        swp[:, i] = SWP_V(V)                                    #Sammelt die Schwerpunktsgeschwindigkeit über den Zeitraum t
+        E_pot[i] = potential(R)
 
-        for i in range(16):
-            A[:, i] = darkforce(R[:, i], R, i)                  #Berechnet die Beschleunigung von den Teilchen
+        for j in range(16):
+            A[:, j] = darkforce(R[:, j], R, j)                  #Berechnet die Beschleunigung von den Teilchen
         
-        for i in range(16):
-            R[:, i] = R[:, i] + V[:, i]*h + 0.5*A[:, i]*h*h     #Bestimmt die neue Position der Teilchen mit der Geschwindigkeit und der Beschleunigung
+        for j in range(16):
+            R[:, j] = R[:, j] + V[:, j]*h + 0.5*A[:, j]*h*h     #Bestimmt die neue Position der Teilchen mit der Geschwindigkeit und der Beschleunigung
         
-        for i in range(16):
-            V[:, i] = V[:, i] + 0.5*(darkforce(R[:, i], R, i) + A[:, i])*h      #Bestimmt die Geschwindigkeit der Teilchen, nach der Beschleunigung durch das LJ-Potential
+        for j in range(16):
+            V[:, j] = V[:, j] + 0.5*(darkforce(R[:, j], R, j) + A[:, j])*h      #Bestimmt die Geschwindigkeit der Teilchen, nach der Beschleunigung durch das LJ-Potential
         
         teleportation(R)                                        #Funktion für die periodische Randbedingung
 
-        for i in range(16):                                     #Plottet das ganze halbwegs flüssig, weil ich keine Ahnung von pyplot animations habe
-            plt.plot(R[0, i], R[1, i], '.r')
+        for j in range(16):                                     #Plottet das ganze halbwegs flüssig, weil ich keine Ahnung von pyplot animations habe
+            plt.plot(R[0, j], R[1, j], '.r')                    #Falls die animation nicht gewünscht ist, einfach diese Schleife und die zwei plt Befehle ausklammern
             plt.xlim(0, L)
             plt.ylim(0, L)
         plt.pause(0.02)
         plt.clf()
     
-    return E_kin[15]
+    return E_kin, swp, E_pot
 
 
-def teleportation(R):
+def teleportation(R):                                           #Teleportiert die Teilchen an die andere Seite der Box
     for i in range(16):
         if R[0, i] > L:
-            R[0, i] += -L
+            R[0, i] = 0
         if R[1, i] > L:
-            R[1, i] += -L
+            R[1, i] = 0
         if R[0, i] < 0:
-            R[0, i] += L
+            R[0, i] = L
         if R[1, i] < 0:
-            R[1, i] += L
+            R[1, i] = L
 
 
+''' Hier die Parameter einstellen '''
 
-L = 20 #Größe der Box
-T = 5  #Anfangstemperatur
-k_const = 1#1.38e-23 #Boltzmann Konstante
+L = 8 #Größe der Box
+T = 1  #Anfangstemperatur
+k_const = 1.38e-23 #Boltzmann Konstante
+t = 1  #Zeit
+h = 0.01    #Schrittweite
 
-R = Rmat()
-V = Vmat()
+R = Rmat()  #Anfangszustand-Position
+V = Vmat()  #Anfangszustand-Geschwindigkeit
 
-# print("Positionen:\n",R)
-# print("Geschwingikeiten:\n",V)
-print("Kinetische Energie:\t", Ekin(V))
-#print("Schwerpunktsgeschwindigkeit:\t", SWP_V(V))
-# print("Temperatur:\t", hotness(V))
-# print("Lennart-Jones Potential, jeweils benachbarter Teilchen:\t", potential(R))
-# print("Anziehungskraft der ersten beiden Teilchen:\t", force(R[:, 1], R[:, 0]))
-# print("Sind zwei Teilchen sich evtl nahe? ;)\t", surrounding(R[:, 0], R[:, 15]))
+print("Kinetische Energie zu Beginn:\t", Ekin(V)) #Zeigt die Kinetische Energie zu Anfang an
 
-B = Verlett(0.01, 2, R, V)
+B, sw, P = Verlet(h, t, R, V)  #Hier die Zeit t an der zweiten Stelle ändern, für längere beobachtungen
 
-print("Nach dem Spuk:\t", B)
+print("Kinetische Energie am Ende:\t", B[-1])     #Zeigt die Kinetische Energie am Ende der Simulation an
 
-plt.show()
+plt.show()  #abwarten bis der plot fertig ist, versucht man ihn vorzeitig zu schließen, geht er wieder auf!
+
+''' Datensätze werden erstellt '''
+
+zeit = np.linspace(0, int(t/h), len(B))
+
+with open("data/kinetic_energy.csv", "w") as f:
+    writer= csv.writer(f)
+    writer.writerows(zip(np.round(zeit, 3), B))
+
+swparr = np.zeros(len(B))
+for i in range(len(B)):
+    swparr[i] = np.linalg.norm(sw[:, i])
+
+with open("data/swp_velocity.csv", "w") as f:
+    writer= csv.writer(f)
+    writer.writerows(zip(np.round(zeit, 3), swparr))
+
+with open("data/temperature.csv", "w") as f:
+    writer= csv.writer(f)
+    writer.writerows(zip(np.round(zeit, 3), B/k_const))
+
+with open("data/potential_energy.csv", "w") as f:
+    writer= csv.writer(f)
+    writer.writerows(zip(np.round(zeit, 3), P))
+
+''' Plots werden erstellt '''
+
+plt.plot(zeit, B, '-b')
+plt.xlabel("Zeitschritte h")
+plt.ylabel("Kinetische Energie in ε")
+
+plt.savefig("plots/kinetic_energy.pdf")
+plt.close()
+
+plt.plot(zeit, swparr, '-b')
+plt.xlabel("Zeitschritte h")
+plt.ylabel("Schwerpunktsgeschwindigkeit")
+
+plt.savefig("plots/swp_velocity.pdf")
+plt.close()
+
+plt.plot(zeit, B/k_const, '-b')
+plt.xlabel("Zeitschritte h")
+plt.ylabel("Temperatur T")
+
+plt.savefig("plots/temperature.pdf")
+plt.close()
+
+plt.plot(zeit, P, '-b')
+plt.xlabel("Zeitschritte h")
+plt.ylabel("Potentielle Energie")
+
+plt.savefig("plots/potential_energy.pdf")
+plt.close()
