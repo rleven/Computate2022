@@ -3,8 +3,8 @@ all: data/aufgabe1 data/aufgabe2 main.pdf
 data/aufgabe1: aufgabe1.cpp | build
 	g++ -O3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
 
-data/aufgabe2: aufgabe2.cpp | build
-	g++ -O3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
+data/aufgabe2: aufgabe2.py | build
+	python aufgabe2.py
 
 main.pdf: FORCE | build
 	  TEXINPUTS=build: \
@@ -17,9 +17,9 @@ main.pdf: FORCE | build
 	  --halt-on-error \
 	main.tex
 
-code: data/aufgabe1 data/aufgabe2 | build
+code: data/aufgabe1 | build
 	data/aufgabe1
-	data/aufgabe2
+	
 
 plot: code | build
 	python plots.py
