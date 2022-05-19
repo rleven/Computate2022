@@ -14,6 +14,13 @@ Zu den Vorteilen:\\
 Das Schussverfahren zeichnet sich dadurch aus, dass die Ableitung einen sogenannten Schussparameter $\alpha$ als Steigung hat.
 Dieser Parameter wird nun solange verändert, bis die Randbedingungen erfüllt sind.
 \newline\\
-Die Jacobi-Iteration 
-
+Die Jacobi-Iteration hat den Vorteil, dass sie immer konvergiert.
+Sie ist die iterative Lösung einer Fixpunktgleichung.
+\newline\\
+Die Gauß-Seidel-Iteration ist ähnlich zur Jacobi-Iteration, der Unterschied hierzu ist, dass statt der vorherigen Iteration, die nächste Iteration auf der rechten Seite der Gleichung verwendet wird.
+Der Vorteil ist der gleiche wie bei Jacobi, es konvergiert immer.
+\newline\\
+Das Relaxationsverfahren ist eine Kombination aus Jacobi und Gauß-Seidel, wobei noch die vorherige Lösung hinzugefügt wird.
 \subsection{2) Wie unterscheidet sich das FTCS-Schema von dem Crank-Nicolson-Schema?}
+Das FTCS-Schema, also "Forward in Time, Centered in Space", nimmt die umliegenden Werte, um den zentrieren Wert für einen Zeitschritt zu berechnen.
+Das Crank-Nicolson-Schema ist auch stabil für große $\Delta t$ und nimmt zusätzlich auch die nächsten Nachbarn des nächsten Zeitschritts.
