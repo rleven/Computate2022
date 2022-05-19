@@ -5,6 +5,7 @@ from matplotlib.animation import Animation, FuncAnimation
 import numpy as np
 
 
+### Aufgabe 1b): Plotten der analytischen Lösung
 phi = np.genfromtxt("data/Potential_b_anal.csv", unpack=True)
 
 fig, ax = plt.subplots(figsize=(6, 6))
@@ -19,8 +20,9 @@ ax.set_ylabel(r"Index der Gitterpunkte in y-Richtung")
 
 plt.savefig("plots/Potential_b_anal.png")
 
-plt.show()
+# plt.show()
 plt.close()
+
 
 
 ### Aufgabe 1 ###
@@ -51,7 +53,7 @@ for temp_aufgabe, temp_cmap in zip(aufgabe, cmap_aufgabe):
 
     plt.savefig("plots/Potential_" + temp_aufgabe + ".png")
 
-    plt.show()
+    # plt.show()
     plt.close()
 
 
