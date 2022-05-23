@@ -1,0 +1,63 @@
+\newpage
+\section{Aufgabe 1: Poisson-Gleichung}
+\label{sec:auf1}
+Hier basiert die numerische Lösung der Poisson-Gleichung auf dem Gauß-Seidel-Verfahren.
+In den Teilaufgaben wird diese für verschiedene Randbedingungen für ein Gittersystem mit den Ausmaßen $Q = [0, 1]^2$ und der Diskretisierung $\Delta = 0.05$ bestimmt. D.h. es gibt 21 Gitterplätze.
+Dabei soll das iterative Gauß-Seidel-Verfahren bei einer Fehlerschranke von $\kappa = 10^{-5}$ abgebrochen werden.
+
+Im folgenden sind die sich zu den auf dem Übungsblatt genannten Rand- und Anfangsbedingungen (RB und AB) ergebenden Plots des Potentials $\Phi(x, y)$ dargestellt.
+
+(Wir haben das elektrische Feld nicht berechnet, da wir nicht wussten in welche Richtung es zeigen soll und wie wir das darstellen sollten.)
+
+\subsection{a)}
+    \vspace*{-2cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.65\textwidth]{plots/Potential_a.png} \vspace*{-1cm}
+        \caption{Das Potential wenn als AB im Inneren $\Phi(x,y)=1$ und als Dirichlet-RB außen $\Phi=0$ gilt. Es gibt keine Ladungen.}
+        \label{fig:Potential_a}
+    \end{figure}
+    \FloatBarrier
+
+\subsection{b)}
+    Für diese Teilaufgabe gilt die Randbedingung, dass alle Gitterpunkte an der Seite von $Q$ mit $y=1$ ein Potential $\Phi(x, y=1) = 1$ besitzen und alle anderen Gitterpunkte nicht.
+
+    Das numerische Ergebnis soll daraufhin mit dem analytischen Ergebnis verglichen werden.
+    Es ist zu erkennen, dass die beiden Ergebnisse in ihrer Form ähneln, wobei bei der numerischen Lösung das Potential etwas homogener an der Seite verteilt ist.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.65\textwidth]{plots/Potential_b.png} \vspace*{-0.7cm}
+        \caption{Das Potential für die oben genannten RB und AB. Es gibt keine Ladungen.}
+        \label{fig:Potential_b}
+    \end{figure}
+    \FloatBarrier
+    \vspace*{-1cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.65\textwidth]{plots/Potential_b_anal.png} \vspace*{-0.7cm}
+        \caption{Das analytisch berechnete Potential mit den oben genannten RB und AB. Es gibt keine Ladungen.}
+        \label{fig:Potential_b_anal}
+    \end{figure}
+    \FloatBarrier
+
+\subsection{c)}
+    \vspace*{-1.5cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.65\textwidth]{plots/Potential_c.png} \vspace*{-0.7cm}
+        \caption{Das Potential wenn eine Ladung in die Mitte von $Q$ gesetzt wird. Als AB gilt überall $\Phi(x,y) = 0$}
+        \label{fig:Potential_c}
+    \end{figure}
+    \FloatBarrier
+
+\subsection{d)}
+    \vspace*{-1.5cm}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.65\textwidth]{plots/Potential_d.png} \vspace*{-0.7cm}
+        \caption{Das Potential zwei positive Ladungen auf die Gitterplätze $(5,5)^\top$, $(15,15)^\top$ und zwei negative Ladungen auf die Gitterplätze $(5,15)^\top$, $(15,5)^\top$ gesetzt werden.}
+        \label{fig:Potential_d}
+    \end{figure}
+    \FloatBarrier
+

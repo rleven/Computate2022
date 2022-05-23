@@ -1,0 +1,29 @@
+\newpage
+\section{Aufgabe 2: Diffusionsgleichung}
+\label{sec:auf2}
+
+\textbf{\textit{Hinweis:}} Das Programm wurde in Python geschrieben und steht in \textit{aufgabe2.py}.
+Das Programm wird euch auffordern zu wählen, welchen Aufgabenteil ihr machen wollt.
+Falls ihr beim Ausführen der Makefile das python-Programm überspringen wollt, gebt einfach etwas anderes ein als a, b oder c.
+
+Im Aufgabenteil a) wurde das FTCS-Schema geprüft und bei der Anfangsbedingung $u(x, 0) = 1$ werden die Werte wie erwartet nicht verändert, sondern bleiben für unendliche Zeit 1.
+\newline\\
+Im Aufgabenteil b) wurde die Dirac-Anfangsbedingung eingesetzt und damit das Stabilitätskriterium untersucht.\\
+In \autoref{fig:b1} ist der Verlauf des initialen Dirac-Wertes an der Position 0.5 gegen die Zeit aufgetragen.
+Hierbei wurde eine Zeit-Schrittweite knapp unter der Stabilitätsgrenze genommen, die $\Delta t < 5\cdot10^{-5}$ beträgt.
+Es ist zu erkennen, dass nach ca. 2000 Zeitschritten das System im Gleichgewicht ist.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{plots/diracminor.pdf}
+    \caption{Verlauf des Wertes u(0.5, t) mit zunehmenden Zeitschritten bei Einhaltung des Stabilitätskriteriums.}
+    \label{fig:b1}
+\end{figure}
+Wenn eine Schrittweite genommen wird, die wenig höher ist als das Stabilitätskriterium, dann explodiert das System, wie in \autoref{fig:b2} dargestellt ist.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{plots/diracmaxi.pdf}
+    \caption{Verlauf des Wertes u(0.5, t) mit zunehmenden Zeitschritten bei Verletzung des Stabilitätskriteriums.}
+    \label{fig:b2}
+\end{figure}
+Im Aufgabenteil c) haben wir den Zeitschritt $\Delta t = 4\cdot10^{-5}$ gewählt und die Heaviside- und Dirac-Kamm-Anfangsbedingung untersucht.\\
+Wie in den Animationen zu sehen ist, erreicht der Dirac-Kamm am schnellsten den Gleichgewichtszustand.
