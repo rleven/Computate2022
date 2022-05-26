@@ -7,7 +7,7 @@ from numpy.random import uniform, seed
 
 ''' Initialisierung '''
 
-seed(138)
+seed(133)
 
 def Rmat():                                                     #Erzeugt die Startkoordinaten der Teilchen
     pos = np.zeros([2, 16])                                     #Erzeugung einer 2x16 Matrix
