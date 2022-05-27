@@ -5,187 +5,250 @@
 
 using namespace Eigen;
 
-MatrixXd startingChargeDistribution(uint numberOfLaticeRows, char subTask);
-MatrixXd startingPotential(uint numberOfLaticeRows, char subTask);
-void gaussSeidel(MatrixXd startingRho, MatrixXd startingPhi, double spaceBetweenLaticePoints, double epsilon, char aufgabe);
-MatrixXd gaussSeidelOneStep(MatrixXd startingRho, MatrixXd phi_old, double spaceBetweenLaticePoints);
-void analyticalGaussSeidel(MatrixXd startingRho, double epsilon);
+
+uint orbitSize = 0;
+
+
+double logisticMappingWarmlaufen(double r, double x_0, uint N_steps);
+double cubicMappingWarmlaufen(double r, double x_0, uint N_steps);
+VectorXd logisticMapping(double r, double x_0, double epsilon);
+VectorXd cubicMapping(double r, double x_0, double epsilon);
+void logisticBifurcationDiagram(uint x_0_count, double delta_r);
+VectorXd linearlySpacedVector(double start, double end, uint count);
+
+
 
 //==============================================================================================================================
-// Gauß-Seidel scheme (calls "gaussSeidelOneStep()")
-void gaussSeidel(MatrixXd startingRho, MatrixXd startingPhi, double spaceBetweenLaticePoints, double epsilon, char aufgabe)
-{
-    std::string subTask(1, aufgabe);
-    std::ofstream outputFile_phi;
-    outputFile_phi.open("data/Potential_" + subTask + ".csv", std::ios_base::trunc);
-    outputFile_phi << startingPhi << std::endl;
-    
-    MatrixXd phi_old = gaussSeidelOneStep(startingRho, startingPhi, spaceBetweenLaticePoints);
-    MatrixXd phi;
+// executes N steps of the logistic mapping for a given parameter r and the starting point x_0
 
-    outputFile_phi << phi_old << std::endl;
+double logisticMappingWarmlaufen(double r, double x_0, uint N_steps)
+{   
+    double x_next, x_old;
+    x_old = x_0;
 
-    double errorBar;
-    do
+    for(uint n = 1; n < N_steps+1; n++)
     {
-        phi = gaussSeidelOneStep(startingRho, phi_old, spaceBetweenLaticePoints);
-        
-        errorBar = (phi - phi_old).norm();
-        
-        phi_old = phi;
-
-        outputFile_phi << phi_old << std::endl;
+        x_next = r * x_old * (1 - x_old);
+        x_old = x_next;
     }
-    while (errorBar > epsilon);
 
-    outputFile_phi.close();
+    return x_next;
 }
 
 
 
 //==============================================================================================================================
-// one step of the Gauß-Seidel scheme computes the values for each inner lattice point
-MatrixXd gaussSeidelOneStep(MatrixXd startingRho, MatrixXd phi_old, double spaceBetweenLaticePoints)
-{
-    uint N = startingRho.rows();
+// executes N steps of the cubic mapping for a given parameter r and the starting point x_0
 
-    MatrixXd phi = phi_old;
-
-    for(uint i = 1; i < (N-1); i++)         /*change only the inner values*/
+double cubicMappingWarmlaufen(double r, double x_0, uint N_steps)
+{   
+    double x_next, x_old;
+    x_old = x_0;
+    
+    for(uint n = 1; n < N_steps+1; n++)
     {
-        for(uint j = 1; j < (N-1); j++)     /*change only the inner values*/
-        {
-            phi(i,j) = (phi_old(i+1,j) + phi(i-1,j) + phi_old(i,j+1) + phi(i,j-1))/4 + (std::pow(spaceBetweenLaticePoints, 2) * startingRho(i,j))/4;
-        }
+        x_next = r * x_old - pow(x_old, 3);
+        x_old = x_next;
     }
-    return phi;
+
+    return x_next;
 }
 
 
 
 //==============================================================================================================================
-// computes the analytical result for the starting conditions of subtask b)
-void analyticalGaussSeidel(MatrixXd startingRho, MatrixXd startingPhi, double epsilon)
-{
-    std::ofstream outputFile_phi_anal;
-    outputFile_phi_anal.open("data/Potential_b_anal.csv", std::ios_base::trunc);
-    
-    uint N = startingRho.rows();
-    VectorXd x(N);
-    VectorXd y(N);
-    for(uint n = 0; n < N; n++)
-    {
-        x(n) = 1/(double)(N-1) * (double)n;
-        y(n) = 1/(double)(N-1) * (double)n;
-    }
+// searches for the fixpoints or orbitals of the logistic mapping for a given parameter r and the starting point x_0
 
-    MatrixXd analyticPhi = startingPhi;
+VectorXd logisticMapping(double r, double x_0, double epsilon)
+{   
+    VectorXd x = VectorXd::Zero(64);                        /*assuming there is chaos after an orbit size of 64*/
+    x(0) = x_0;
 
-    double summand;
-    double angle;
-    uint counter;
-    for(uint i = 1; i < (N-1); i++)         /*change only the inner values*/
+    for(uint i = 1; i < 64; i++)
     {
-        for(uint j = 1; j < (N-1); j++)     /*change only the inner values*/
+        x(i) = r * x(i-1) * (1 - x(i-1));                   /*logistic mapping as iterating scheme*/
+        orbitSize = 1;
+
+        for(int j = i-1; j >= 0; j--)
         {
-            counter = 1;
-            do
+            orbitSize++;
+            if(abs(x(i) - x(j)) < epsilon)                  /*check for a fixpoint or an orbital*/
             {
-                angle = counter*M_PI;
-                summand = 2*(1 - cos(angle)) / (angle*sinh(angle)) * sin(angle*x(j)) * sinh(angle*y(i));
-                // std::cout << counter << std::endl;
-                analyticPhi(i,j) += summand;
-                counter++;
+                return x;
             }
-            while (summand > epsilon);
         }
     }
-    outputFile_phi_anal << analyticPhi << std::endl;
 
-    outputFile_phi_anal.close();
+    return x;
 }
 
 
 
 //==============================================================================================================================
-// creates a starting charge distribution for each subtask a), b), c) and d)
+// searches for the fixpoints or orbitals of the cubic mapping for a given parameter r and the starting point x_0
 
-MatrixXd startingChargeDistribution(uint numberOfLaticeRows, char subTask)
-{
-    MatrixXd startingRho = MatrixXd::Zero(numberOfLaticeRows, numberOfLaticeRows);
-    
-    switch(subTask)
+VectorXd cubicMapping(double r, double x_0, double epsilon)
+{   
+    VectorXd x = VectorXd::Zero(64);                        /*assuming there is chaos after an orbit size of 64*/
+    x(0) = x_0;
+
+    for(uint i = 1; i < 64; i++)
     {
-    case 'a':
-        break;
-    case 'b':
-        break;
-    case 'c':
-        startingRho((numberOfLaticeRows-1)/2, (numberOfLaticeRows-1)/2) = 1;
-        break;
-    case 'd':
-        startingRho(5, 5) = 1;
-        startingRho(15, 15) = 1;
-        startingRho(5, 15) = -1;
-        startingRho(15, 5) = -1;
-        break;
-    }
+        x(i) = r * x(i-1) - pow(x(i-1), 3);                 /*cubic mapping as iterating scheme*/
+        orbitSize = 1;
 
-    return startingRho;
-}
-
-
-
-//==============================================================================================================================
-// creates a starting potential considering the dirichlet boundry conditions for each subtask a), b), c) and d)
-
-MatrixXd startingPotential(uint numberOfLaticeRows, char subTask)
-{
-    MatrixXd startingPhi = MatrixXd::Zero(numberOfLaticeRows, numberOfLaticeRows);
-    
-    switch(subTask)
-    {
-    case 'a':
-        startingPhi.block(1, 1, numberOfLaticeRows-2, numberOfLaticeRows-2) = MatrixXd::Constant(numberOfLaticeRows-2, numberOfLaticeRows-2, 1.);
-        break;
-    case 'b':
-        for(uint i = 0; i < numberOfLaticeRows; i++)
+        for(int j = i-1; j >= 0; j--)
         {
-            startingPhi(numberOfLaticeRows-1, i) = 1.;
+            orbitSize++;
+            if(abs(x(i) - x(j)) < epsilon)                  /*check for a fixpoint or an orbital*/
+            {
+                return x;
+            }
         }
-        break;
-    case 'c':
-        break;
-    case 'd':
-        break;
     }
-    return startingPhi;
+
+    return x;
 }
 
+
+
+//==============================================================================================================================
+// creates a bifurcation diagram for the logistic mapping
+
+void logisticBifurcationDiagram(uint x_0_count, double delta_r)
+{   
+    VectorXd x_0_vec = linearlySpacedVector(0, 1, x_0_count);   
+    double x_0 = 0;
+
+    int r_min = 0;
+    int r_max = 4;
+    uint r_count = (r_max-r_min)/delta_r - 1;
+    double r = 0;
+    
+    // Warmlaufen ------------------------------------------------------------------------------
+    double warmlaufen_x;
+    uint N_steps_warmlaufen = 200;
+
+
+    // finding fixpoints and orbitals ----------------------------------------------------------
+    std::ofstream outputFile_fixpoints_logistic;
+    outputFile_fixpoints_logistic.open("data/fixpoints_logistic.csv", std::ios_base::trunc);
+    
+    bool foundChaos_r = false;
+    double chaos_r = r_max;
+    
+    VectorXd fixpoints;
+    double epsilon = pow(10, -4);                       /*the maximum difference between two x from two iterations for them to be counted as one point*/
+    for(int x_0_counter = 0; x_0_counter < x_0_count; x_0_counter++)
+    {
+        x_0 = x_0_vec(x_0_counter);
+        
+        foundChaos_r = false;
+
+        r = 0;
+        for(int r_counter = 0; r_counter < r_count; r_counter++)
+        {
+            r += delta_r;
+            warmlaufen_x = logisticMappingWarmlaufen(r, x_0, N_steps_warmlaufen);
+            fixpoints = logisticMapping(r, warmlaufen_x, epsilon);
+            if((!foundChaos_r) && (orbitSize == 64)) {                             /*checks if you already found a r for which the orbit size is greater than 64*/
+                if(r < chaos_r) {
+                    chaos_r = r;
+                }
+                foundChaos_r = true;
+            }
+            outputFile_fixpoints_logistic << r << "\t" << fixpoints.transpose() << std::endl;
+        }
+    }
+    std::cout << "Die bestimmte Feigenbaumkonstante der logistischen Abb.:   " << chaos_r << std::endl;
+
+    outputFile_fixpoints_logistic.close();
+}
+
+
+
+//==============================================================================================================================
+// creates a bifurcation diagram for the logistic mapping
+
+void cubicBifurcationDiagram(uint x_0_count, double delta_r)
+{   
+    VectorXd x_0_vec = linearlySpacedVector(-1, 1, x_0_count);   
+    x_0_vec << -1, 1;   
+    double x_0 = 0;
+
+    int r_min = 0;
+    int r_max = 3;
+    uint r_count = (r_max-r_min)/delta_r - 1;
+    double r = 0;
+    
+    // Warmlaufen ------------------------------------------------------------------------------
+    double warmlaufen_x;
+    uint N_steps_warmlaufen = 200;
+
+
+    // finding fixpoints and orbitals ----------------------------------------------------------
+    std::ofstream outputFile_fixpoints_cubic;
+    outputFile_fixpoints_cubic.open("data/fixpoints_cubic.csv", std::ios_base::trunc);
+    
+    bool foundChaos_r = false;
+    double chaos_r = r_max;
+    
+    VectorXd fixpoints;
+    double epsilon = pow(10, -4);                       /*the maximum difference between two x from two iterations for them to be counted as one point*/
+    for(int x_0_counter = 0; x_0_counter < x_0_count; x_0_counter++)
+    {
+        x_0 = x_0_vec(x_0_counter);
+        
+        foundChaos_r = false;
+
+        r = 0;
+        for(int r_counter = 0; r_counter < r_count; r_counter++)
+        {
+            r += delta_r;
+            warmlaufen_x = cubicMappingWarmlaufen(r, x_0, N_steps_warmlaufen);
+            fixpoints = cubicMapping(r, warmlaufen_x, epsilon);
+            if((!foundChaos_r) && (orbitSize == 64)) {                             /*checks if you already found a r for which the orbit size is greater than 64*/
+                if(r < chaos_r) {
+                    chaos_r = r;
+                }
+                foundChaos_r = true;
+            }
+            outputFile_fixpoints_cubic << r << "\t" << fixpoints.transpose() << std::endl;
+        }
+    }
+    std::cout << "Die bestimmte Feigenbaumkonstante der kubischen Abb.:   " << chaos_r << std::endl;
+
+    outputFile_fixpoints_cubic.close();
+}
+
+
+
+//==============================================================================================================================
+// create a vector with a given number of linearly spaced values in a given interval without the beginning and ending values
+
+VectorXd linearlySpacedVector(double start, double end, uint count)
+{
+    double delta = abs(end-start)/(count+1.);
+    VectorXd vec(count);
+    vec(0) = start + delta;
+    for(uint i = 1; i < count; i++)
+    {
+        vec(i) = vec(i-1) + delta;
+    }
+    return vec;
+}
 
 
 int main()
 {
-    uint length = 1;
-    double spaceBetweenLaticePoints = 0.05;
-    uint numberOfLaticeRows = length/spaceBetweenLaticePoints + 1;
+    uint x_0_count;
+    double delta_r = pow(10, -3);
 
-    double epsilon = std::pow(10, -5);
-    
-    std::string aufgabe = "abcd";
-    for(uint i = 0; i < aufgabe.length(); i++)
-    {
-        gaussSeidel(startingChargeDistribution(numberOfLaticeRows, aufgabe[i])
-                ,startingPotential(numberOfLaticeRows, aufgabe[i])
-                ,spaceBetweenLaticePoints
-                ,epsilon
-                ,aufgabe[i]);
-    }
+    x_0_count = 3;
+    logisticBifurcationDiagram(x_0_count, delta_r);
 
-    analyticalGaussSeidel(startingChargeDistribution(numberOfLaticeRows, 'b')
-        ,startingPotential(numberOfLaticeRows, 'b')
-        ,epsilon);
-
+    x_0_count = 2;
+    cubicBifurcationDiagram(x_0_count, delta_r);
 
     return 0;
 }
