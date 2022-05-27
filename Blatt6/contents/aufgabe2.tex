@@ -1,3 +1,37 @@
 \newpage
 \section{Aufgabe 2: Der Wetterfrosch}
 \label{sec:auf2}
+
+\subsection{a)}
+In der Datei \textit{aufgabe2.py} wurde das Runge-Kutta Verfahren vierter Ordnung implementiert.\\
+Als Anfangsbedingungen haben wir uns für vier Bahnen entschieden:
+\begin{equation}
+    \left(\begin{array}{c}0\\0\\0\end{array}\right) \ \text{,} \ \left(\begin{array}{c}1\\1\\1\end{array}\right) \ \text{,} \ \left(\begin{array}{c}0.1\\0.1\\0.1\end{array}\right) \ \text{und} \ \left(\begin{array}{c}5\\10\\15\end{array}\right)
+\end{equation}
+Diese wurden jeweils mit dem Parameter $r=20$ und $r=28$ berechnet und graphisch wie folgt dargestellt.
+
+\subsection{b)}
+\textbf{In den folgenden Abbildungen ist die horizontale Achse immer die x-Achse und die vertikale Achse immer die y-Achse.}\\
+Zunächst wurde der Verlauf der Koordinaten auf der xy-Ebene dargestellt.\\
+In \autoref{fig:xy} sind die Verläufe für alle Anfangsbedingungen dargestellt, bis auf die Anfangsbedingung $\left(0,0,0\right)^T$.
+Diese wurde in keiner Grafik dargestellt, da hierbei die Differentialgleichungen nach Runge-Kutta wieder nur $\left(0,0,0\right)^T$ ergeben.
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90,scale=0.65]{plots/2Dlorenz.pdf}
+    \caption{Hier sind die sechs Verläufe in der xy-Ebene für verschiedene Startbedingungen dargestellt.}
+    \label{fig:xy}
+\end{figure}
+Die Pointcaré-Schnitte sind in \autoref{fig:care} dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90,scale=0.65]{plots/pointcare.pdf}
+    \caption{Hier sind die sechs verschiedenen Pointcaré-Schnitte für z=20 dargestellt.}
+    \label{fig:care}
+\end{figure}
+Und zuletzt wurden alle Verläufe in drei Dimensionen in \autoref{fig:dreid} dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[angle=-90,scale=0.65]{plots/3Dlorenz.pdf}
+    \caption{Hier sind die sechs Verläufe in drei Dimensionen für verschiedene Startbedingungen dargestellt.}
+    \label{fig:dreid}
+\end{figure}

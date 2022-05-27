@@ -17,7 +17,7 @@ ax.set_ylabel(r"x_n")
 
 plt.savefig("plots/fixpoints_logistic.png")
 
-plt.show()
+#plt.show()
 plt.close()
 
 
@@ -34,9 +34,12 @@ ax.set_ylabel(r"x_n")
 
 plt.savefig("plots/fixpoints_cubic.png")
 
-plt.show()
+#plt.show()
 plt.close()
 
+### Aufgabe 2: Plotten der verschiedenen Darstellungen der DGLs
+
+### XY-Darstellung
 fig, ax = plt.subplots(2, 3, figsize=(15, 10))
 fig.tight_layout()
 
@@ -61,6 +64,7 @@ ax[1, 2].set_title(r"Start: (5,10,15), r=28")
 plt.savefig('plots/2Dlorenz.pdf')
 plt.close()
 
+### 3D-Darstellung
 fig3d = plt.figure(figsize=(15, 10))
 fig3d.tight_layout()
 
@@ -91,36 +95,37 @@ ax3d5.set_title(r"Start: (5,10,15), r=28")
 plt.savefig('plots/3Dlorenz.pdf')
 plt.close()
 
+### Pointcare-Schnitte
 fig_care, ax_care = plt.subplots(2, 3, figsize=(15, 10))
 fig_care.tight_layout()
 
 for i in range(6):
-    counter = 0
-    schnittpunkte_x = np.array([])
-    schnittpunkte_y = np.array([])
+    count = 0
+    crosspoints_x = np.array([])
+    crosspoints_y = np.array([])
 
     x, y, z = np.genfromtxt('data/path'+str(i+1)+'.csv', unpack=True)
-    while counter < len(z)-1:
-        if z[counter] > 20 and z[counter+1] < 20: 
-            m_x = (z[counter+1] - z[counter])/(x[counter+1] - x[counter])
-            m_y = (z[counter+1] - z[counter])/(y[counter+1] - y[counter])
+    while count < len(z)-1:
+        if z[count] > 20 and z[count+1] < 20: 
+            m_x = (z[count+1] - z[count])/(x[count+1] - x[count])
+            m_y = (z[count+1] - z[count])/(y[count+1] - y[count])
 
-            b_x = z[counter] - m_x * x[counter]
-            b_y = z[counter] - m_y * y[counter]
+            b_x = z[count] - m_x * x[count]
+            b_y = z[count] - m_y * y[count]
 
             x_20 = (20 - b_x) / m_x
             y_20 = (20 - b_y) / m_y
 
-            schnittpunkte_x = np.append(schnittpunkte_x, x_20)
-            schnittpunkte_y = np.append(schnittpunkte_y, y_20)
+            crosspoints_x = np.append(crosspoints_x, x_20)
+            crosspoints_y = np.append(crosspoints_y, y_20)
 
-        counter  = counter + 1
+        count  = count + 1
 
-    colors = cm.rainbow(np.linspace(0,1,len(schnittpunkte_x)))
+    colors = cm.rainbow(np.linspace(0,1,len(crosspoints_x)))
     if i <=2:
-        ax_care[0, i].scatter(schnittpunkte_x, schnittpunkte_y, s=5, c=colors)
+        ax_care[0, i].scatter(crosspoints_x, crosspoints_y, s=5, c=colors)
     else:
-        ax_care[1, i-3].scatter(schnittpunkte_x, schnittpunkte_y, s=5, c=colors)
+        ax_care[1, i-3].scatter(crosspoints_x, crosspoints_y, s=5, c=colors)
 
 ax_care[0, 0].set_title(r"Start: (1,1,1), r=20")
 ax_care[0, 1].set_title(r"Start: (0.1,0.1,0.1), r=20")

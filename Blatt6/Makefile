@@ -1,9 +1,27 @@
-all: data/aufgabe1 data/aufgabe2 plot main.pdf
+all: data/aufgabe1 data/path0.csv data/path1.csv data/path2.csv data/path3.csv data/path4.csv data/path5.csv data/path6.csv plot main.pdf
 
 data/aufgabe1: aufgabe1.cpp | build
 	g++ -O3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
 
-data/aufgabe2: aufgabe2.py | build
+data/path0.csv: aufgabe2.py | build
+	python aufgabe2.py
+
+data/path1.csv: aufgabe2.py | build
+	python aufgabe2.py
+
+data/path2.csv: aufgabe2.py | build
+	python aufgabe2.py
+
+data/path3.csv: aufgabe2.py | build
+	python aufgabe2.py
+
+data/path4.csv: aufgabe2.py | build
+	python aufgabe2.py
+
+data/path5.csv: aufgabe2.py | build
+	python aufgabe2.py
+
+data/path6.csv: aufgabe2.py | build
 	python aufgabe2.py
 
 main.pdf: FORCE | build
