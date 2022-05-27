@@ -1,152 +1,64 @@
+import os
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 from matplotlib.animation import FuncAnimation
 
-''' Implementierung der FTCS-Funktion '''
+def func(xyz, param):
+    velo = np.zeros(3)
 
-#ab hier Aufgabenteil a)
+    velo[0] = param[0] * (xyz[1] - xyz[0])
+    velo[1] = -xyz[0]*xyz[2] + param[2]*xyz[0] - xyz[1]
+    velo[2] = xyz[0]*xyz[1] - param[1]*xyz[2]
 
-def FTCS(val, taim, taim_step):
-    N = int(taim/taim_step) #Anzanhl an Schritten werden bestimmt
-    
-    L = np.zeros([N, 101]) #Array mit 100 Werten je Zeitschritt
-    L[0, :] = val #Befüllung der initialen Werte 
+    return velo
 
-    vorfaktor = taim_step/(0.01**2) #Vorfaktor des FTCS
-    print("Der Vorfaktor ist:\t", vorfaktor)
+def quadruple_kutta(h, t_end, var, param, flname):
+    t = 0 
+    while t < t_end:
+        kutta1 = h * func(var, param)
+        kutta2 = h * func(var + kutta1/2, param)
+        kutta3 = h * func(var + kutta2/2, param)
+        kutta4 = h * func(var + kutta3, param)
 
-    for n in range(N-1):                                                        #hier ist der eigentliche FTCS-Algorithmus geschrieben
-        L[n+1, 0] = L[n, 0] + vorfaktor*(-1*L[n, 0] + L[n, 1])
+        var = var + (kutta1 +2*kutta2 + 2*kutta3 + kutta4)/6
+        
+        with open(flname, 'a') as fname:
+            np.savetxt(fname, np.vstack(var).T)
+        t += h
 
-        L[n+1, -1] = L[n, -1] + vorfaktor*(L[n, -2] - 1*L[n, -1])
+path0 = np.array([0,0,0])
+path1 = np.array([1,1,1])
+path2 = np.array([0.1,0.1,0.1])
+path3 = np.array([5,10,15])
 
-        for j in range(1, 100):
-            L[n+1, j] = L[n, j] + vorfaktor*(L[n, j-1] - 2*L[n, j] + L[n, j+1])
+parameters0 = np.array([10, 8/3, 20])
+parameters1 = np.array([10, 8/3, 28])
+t_end = 100
+h = 0.005
 
-    return L
+try:
+    os.remove("data/path0.csv")
+    os.remove("data/path1.csv")
+    os.remove("data/path2.csv")
+    os.remove("data/path3.csv")
+    os.remove("data/path5.csv")
+    os.remove("data/path6.csv")
+    os.remove("data/path7.csv")
+except:
+    FileNotFoundError()
 
-def anime(RB, title):                                                                  #eine Funktion für die Animationen
-    fig, ax = plt.subplots()
-    line, = ax.plot([], [], linestyle="", marker='.', markersize=4)
-    ax.set_title(title)
-    ax.set_xlim(-0.5, 1.5)
-    ax.set_ylim(0, int(t/t_step)+1)
-    ax.set_xlabel("Werte der Punkte u")
-    ax.set_ylabel("Zeitschritte")
-
-
-    ymask = np.arange(int(t/t_step))
-
-    def animation_func(i):
-        x = RB[i, :]
-        y = ymask[i]
-        line.set_data(x, y)
-        return line
-
-    animation = FuncAnimation(fig, func=animation_func, frames=int(t/t_step), interval=1, blit=False)
-    plt.show()
-
-print("Welcher Aufgabenteil soll ausgeführt werden? Wahl aus a, b oder c!")
-
-abfrage = input()
-
-
-if abfrage == "a":
-
-    init_value = np.full(101, 1.0)
-    t = 0.1
-    t_step = 0.00004
-
-    RR = FTCS(init_value, t, t_step)
-    np.savetxt('data/diffusa.txt', RR)
-    print("Saved a)")
-    anime(RR, "u(x, 0) = 1")
-#bis hierhin Aufgabenteil a)
-
-#ab hier Aufgabenteil b)
-
-if abfrage == "b":
-
-    init_value = np.zeros(101)
-    init_value[50] = 1.0
-    t = 0.2
-
-    stabilkrit = 0.5*0.01**2
-    print("Stabilitätskriterium liegt bei t_step <", stabilkrit)
-
-    t_step = 4e-5
-
-    RR = FTCS(init_value, t, t_step)
-    np.savetxt('data/diffusb.txt', RR)
-    print("Saved b)")
-    anime(RR, "Dirac im Stabilitätskriterium")
-    plt.close()
-
-    plt.plot(np.linspace(1, len(RR[:, 50]), len(RR[:, 50])), RR[:, 50], '-b', label="∆t = 4e-5")
-    plt.xlabel("Zeitschritte")
-    plt.ylabel("Wert des δ(x - 0.5)")
-    plt.title("Verlauf des 50sten u's bei Dirac Bedingung")
-    plt.legend(loc="best")
-    plt.savefig("plots/diracminor.pdf")
-
-    t_step = 6e-5
-
-    RR = FTCS(init_value, t, t_step)
-    plt.close()
-
-    plt.plot(np.linspace(1, len(RR[:, 50]), len(RR[:, 50])), RR[:, 50], '-b', label="∆t = 6e-5")
-    plt.xlabel("Zeitschritte")
-    plt.ylabel("Wert des δ(x - 0.5)")
-    plt.title("Verlauf des 50sten u's bei Dirac Bedingung")
-    plt.legend(loc="best")
-    plt.savefig("plots/diracmaxi.pdf")
-    plt.close()
-
-    print("Das hier drüber ist kein Error, sondern was wir für die nicht Einhaltung des Stabilitätskriteriums erwarten!")
-
-#bis hierhin Aufgabenteil b)
-
-#ab hier Aufgabenteil c)
-
-if abfrage == "c":
-
-    ''' Heaviside '''
-    init_value = np.zeros(101)
-    init_value[50:] = 1.0
-    t = 0.2
-
-    stabilkrit = 0.5*0.01**2
-    print("Stabilitätskriterium liegt bei t_step <", stabilkrit)
-
-    t_step = 4e-5
-
-    RR = FTCS(init_value, t, t_step)
-    np.savetxt('data/diffusheavi.txt', RR)
-    print("Saved Heavi")
-    anime(RR, "Heaviside")
-    plt.close()
-
-    ''' Dirac-Kamm '''
-    init_value = np.zeros(101)
-    init_value[10] = 1/9
-    init_value[20] = 1/9
-    init_value[30] = 1/9
-    init_value[40] = 1/9
-    init_value[50] = 1/9
-    init_value[60] = 1/9
-    init_value[70] = 1/9
-    init_value[80] = 1/9
-    init_value[90] = 1/9
-    t = 0.2
-
-    t_step = 4e-5
-
-    RR = FTCS(init_value, t, t_step)
-    np.savetxt('data/diffuscomb.txt', RR)
-    print("Saved Kamm")
-    anime(RR, "Dirac-Kamm")
-    plt.close()   
-
-if abfrage != "a" and abfrage != "b" and abfrage != "c":
-    print("Falsche Eingabe!")
+print("Status: 0 out of 7 complete")
+quadruple_kutta(h, t_end, path0, parameters0, "data/path0.csv")
+print("Status: 1 out of 7 complete")
+quadruple_kutta(h, t_end, path1, parameters0, "data/path1.csv")
+print("Status: 2 out of 7 complete")
+quadruple_kutta(h, t_end, path2, parameters0, "data/path2.csv")
+print("Status: 3 out of 7 complete")
+quadruple_kutta(h, t_end, path3, parameters0, "data/path3.csv")
+print("Status: 4 out of 7 complete")
+quadruple_kutta(h, t_end, path1, parameters1, "data/path4.csv")
+print("Status: 5 out of 7 complete")
+quadruple_kutta(h, t_end, path2, parameters1, "data/path5.csv")
+print("Status: 6 out of 7 complete")
+quadruple_kutta(h, t_end, path3, parameters1, "data/path6.csv")
+print("Status: complete")

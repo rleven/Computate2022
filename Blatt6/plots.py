@@ -1,87 +1,115 @@
-from mimetypes import init
 import matplotlib.pyplot as plt
 from matplotlib import colors
+import matplotlib.cm as cm
 from matplotlib.animation import Animation, FuncAnimation
 import numpy as np
 
+def anime(finame):
+    fig, ax = plt.subplots()
+    line, = ax.plot([], [], linestyle="", marker='.', markersize=4)
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
 
-### Aufgabe 1b): Plotten der analytischen Lösung
-phi = np.genfromtxt("data/Potential_b_anal.csv", unpack=True)
+    def anifunc(i):
+        x = np.genfromtxt(finame, usecols=0, unpack=True)
+        y = np.genfromtxt(finame, usecols=1, unpack=True)
+        line.set_data(x, y)
+        return line
 
-fig, ax = plt.subplots(figsize=(6, 6))
-quad = ax.imshow(phi, cmap='Reds')
+    animation = FuncAnimation(fig, func = anifunc, frames = int(t_end/h), interval = 1, blit = False)
+    plt.show()
 
-cb = fig.colorbar(quad)
-cb.formatter.set_powerlimits((0, 0))
-cb.minorticks_on()
+fig, ax = plt.subplots(2, 3, figsize=(15, 10))
+fig.tight_layout()
 
-ax.set_xlabel(r"Index der Gitterpunkte in x-Richtung")
-ax.set_ylabel(r"Index der Gitterpunkte in y-Richtung")
+ax[0, 0].plot(np.genfromtxt('data/path1.csv', usecols=0, unpack=True), np.genfromtxt('data/path1.csv', usecols=1, unpack=True))
+ax[0, 0].set_title(r"Start: (1,1,1), r=20")
 
-plt.savefig("plots/Potential_b_anal.png")
+ax[0, 1].plot(np.genfromtxt('data/path2.csv', usecols=0, unpack=True), np.genfromtxt('data/path2.csv', usecols=1, unpack=True))
+ax[0, 1].set_title(r"Start: (0.1,0.1,0.1), r=20")
 
-# plt.show()
+ax[0, 2].plot(np.genfromtxt('data/path3.csv', usecols=0, unpack=True), np.genfromtxt('data/path3.csv', usecols=1, unpack=True))
+ax[0, 2].set_title(r"Start: (5,10,15), r=20")
+
+ax[1, 0].plot(np.genfromtxt('data/path4.csv', usecols=0, unpack=True), np.genfromtxt('data/path4.csv', usecols=1, unpack=True))
+ax[1, 0].set_title(r"Start: (1,1,1), r=28")
+
+ax[1, 1].plot(np.genfromtxt('data/path5.csv', usecols=0, unpack=True), np.genfromtxt('data/path5.csv', usecols=1, unpack=True))
+ax[1, 1].set_title(r"Start: (0.1,0.1,0.1), r=28")
+
+ax[1, 2].plot(np.genfromtxt('data/path6.csv', usecols=0, unpack=True), np.genfromtxt('data/path6.csv', usecols=1, unpack=True))
+ax[1, 2].set_title(r"Start: (5,10,15), r=28")
+
+plt.savefig('plots/2Dlorenz.pdf')
 plt.close()
 
+fig3d = plt.figure(figsize=(15, 10))
+fig3d.tight_layout()
 
+ax3d0 = fig3d.add_subplot(2, 3, 1, projection='3d')
+ax3d0.plot(np.genfromtxt('data/path1.csv', usecols=0, unpack=True), np.genfromtxt('data/path1.csv', usecols=1, unpack=True), np.genfromtxt('data/path1.csv', usecols=2, unpack=True))
+ax3d0.set_title(r"Start: (1,1,1), r=20")
 
-### Aufgabe 1 ###
-aufgabe = ['a', 'b', 'c', 'd']
-cmap_aufgabe = ['Reds' , 'Reds', 'Reds', 'RdBu_r']
-L = 21
+ax3d1 = fig3d.add_subplot(2, 3 , 2, projection='3d')
+ax3d1.plot(np.genfromtxt('data/path2.csv', usecols=0, unpack=True), np.genfromtxt('data/path2.csv', usecols=1, unpack=True), np.genfromtxt('data/path2.csv', usecols=2, unpack=True))
+ax3d1.set_title(r"Start: (0.1,0.1,0.1), r=20")
 
-for temp_aufgabe, temp_cmap in zip(aufgabe, cmap_aufgabe):
-    phi = np.transpose(np.genfromtxt("data/Potential_" + temp_aufgabe + ".csv", unpack=True))
-    N_steps = int(phi.shape[0] / L)
+ax3d2 = fig3d.add_subplot(2, 3, 3, projection='3d')
+ax3d2.plot(np.genfromtxt('data/path3.csv', usecols=0, unpack=True), np.genfromtxt('data/path3.csv', usecols=1, unpack=True), np.genfromtxt('data/path3.csv', usecols=2, unpack=True))
+ax3d2.set_title(r"Start: (5,10,15), r=20")
 
-    # Die Potentialwerte in ein angemessenes Format, hier 3d-Array, (für die Animation) bringen
-    phi_3d = np.empty(shape=(0, L, L))
-    for i in np.arange(N_steps):
-        temp = phi[L*i:L*i+L, :]
-        phi_3d = np.append(phi_3d, np.transpose(np.atleast_3d(temp)), axis=0)
+ax3d3 = fig3d.add_subplot(2, 3, 4, projection='3d')
+ax3d3.plot(np.genfromtxt('data/path4.csv', usecols=0, unpack=True), np.genfromtxt('data/path4.csv', usecols=1, unpack=True), np.genfromtxt('data/path4.csv', usecols=2, unpack=True))
+ax3d3.set_title(r"Start: (1,1,1), r=28")
 
+ax3d4 = fig3d.add_subplot(2, 3 , 5, projection='3d')
+ax3d4.plot(np.genfromtxt('data/path5.csv', usecols=0, unpack=True), np.genfromtxt('data/path5.csv', usecols=1, unpack=True), np.genfromtxt('data/path5.csv', usecols=2, unpack=True))
+ax3d4.set_title(r"Start: (0.1,0.1,0.1), r=28")
 
-    fig, ax = plt.subplots(figsize=(6, 6))
-    quad = ax.imshow(phi_3d[N_steps-1], cmap=temp_cmap)
+ax3d5 = fig3d.add_subplot(2, 3, 6, projection='3d')
+ax3d5.plot(np.genfromtxt('data/path6.csv', usecols=0, unpack=True), np.genfromtxt('data/path6.csv', usecols=1, unpack=True), np.genfromtxt('data/path6.csv', usecols=2, unpack=True))
+ax3d5.set_title(r"Start: (5,10,15), r=28")
 
-    cb = fig.colorbar(quad)
-    cb.formatter.set_powerlimits((0, 0))
-    cb.minorticks_on()
+plt.savefig('plots/3Dlorenz.pdf')
+plt.close()
 
-    ax.set_xlabel(r"Index der Gitterpunkte in x-Richtung")
-    ax.set_ylabel(r"Index der Gitterpunkte in y-Richtung")
+fig_care, ax_care = plt.subplots(2, 3, figsize=(15, 10))
+fig_care.tight_layout()
 
-    plt.savefig("plots/Potential_" + temp_aufgabe + ".png")
+for i in range(6):
+    counter = 0
+    schnittpunkte_x = np.array([])
+    schnittpunkte_y = np.array([])
 
-    # plt.show()
-    plt.close()
+    x, y, z = np.genfromtxt('data/path'+str(i+1)+'.csv', unpack=True)
+    while counter < len(z)-1:
+        if z[counter] > 20 and z[counter+1] < 20: 
+            m_x = (z[counter+1] - z[counter])/(x[counter+1] - x[counter])
+            m_y = (z[counter+1] - z[counter])/(y[counter+1] - y[counter])
 
+            b_x = z[counter] - m_x * x[counter]
+            b_y = z[counter] - m_y * y[counter]
 
+            x_20 = (20 - b_x) / m_x
+            y_20 = (20 - b_y) / m_y
 
-# # Animation der Iterationen von Aufgabe 1 (Animation von d) zeigt nichts an. Wissen nicht wieso.)
-# #############################################################################################################################################
-#     fig, ax = plt.subplots(figsize=(6, 6))
-#     quad = ax.imshow(phi_3d[0], cmap=temp_cmap) #,  norm=colors.LogNorm(vmin=10**(-7), vmax=1))
-    
-#     fig.colorbar(quad)
-#     cb.minorticks_on()
+            schnittpunkte_x = np.append(schnittpunkte_x, x_20)
+            schnittpunkte_y = np.append(schnittpunkte_y, y_20)
 
-#     ax.set_xlabel(r"Index der Gitterpunkte in x-Richtung")
-#     ax.set_ylabel(r"Index der Gitterpunkte in y-Richtung")
+        counter  = counter + 1
 
-#     def animation_function(i):
-#         phi_step = phi_3d[i]
-#         quad.set_array(phi_step)
-#         return quad
+    colors = cm.rainbow(np.linspace(0,1,len(schnittpunkte_x)))
+    if i <=2:
+        ax_care[0, i].scatter(schnittpunkte_x, schnittpunkte_y, s=5, c=colors)
+    else:
+        ax_care[1, i-3].scatter(schnittpunkte_x, schnittpunkte_y, s=5, c=colors)
 
-#     anim = FuncAnimation(fig
-#                         ,func=animation_function
-#                         ,frames=N_steps
-#                         ,interval=5
-#                         ,blit=False)
+ax_care[0, 0].set_title(r"Start: (1,1,1), r=20")
+ax_care[0, 1].set_title(r"Start: (0.1,0.1,0.1), r=20")
+ax_care[0, 2].set_title(r"Start: (5,10,15), r=20")
+ax_care[1, 0].set_title(r"Start: (1,1,1), r=28")
+ax_care[1, 1].set_title(r"Start: (0.1,0.1,0.1), r=28")
+ax_care[1, 2].set_title(r"Start: (5,10,15), r=28")
 
-#     plt.show()
-#     plt.close()
-# #############################################################################################################################################
-
-
+plt.savefig('plots/pointcare.pdf')
+plt.close()
