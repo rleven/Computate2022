@@ -4,7 +4,6 @@ import matplotlib.cm as cm
 from matplotlib.animation import Animation, FuncAnimation
 import numpy as np
 
-
 fig, ax = plt.subplots(2, 3, figsize=(15, 10))
 fig.tight_layout()
 
