@@ -1,63 +1,45 @@
 \newpage
-\section{Aufgabe 1: Poisson-Gleichung}
+\section{Aufgabe 1: Bifurkationsdiagramme}
 \label{sec:auf1}
-Hier basiert die numerische Lösung der Poisson-Gleichung auf dem Gauß-Seidel-Verfahren.
-In den Teilaufgaben wird diese für verschiedene Randbedingungen für ein Gittersystem mit den Ausmaßen $Q = [0, 1]^2$ und der Diskretisierung $\Delta = 0.05$ bestimmt. D.h. es gibt 21 Gitterplätze.
-Dabei soll das iterative Gauß-Seidel-Verfahren bei einer Fehlerschranke von $\kappa = 10^{-5}$ abgebrochen werden.
+In dieser Aufgabe sollten Bifurkationsdiagramme für zwei Abbildungen geplottet werden.
 
-Im folgenden sind die sich zu den auf dem Übungsblatt genannten Rand- und Anfangsbedingungen (RB und AB) ergebenden Plots des Potentials $\Phi(x, y)$ dargestellt.
+Nach der Implementierung der Iterationsvorschrift der Abbildungen soll diese $N$-mal durchlaufen werden (bei uns 200-mal), sodass garantiert werden kann, dass ein Fixpunkt oder ein Orbit gefunden wurde. Dabei sollte das $r>0$ so gewählt werden, dass die $x$-Werte in jedem Schritt innerhalb ihrer jeweils vorgegebenen Intervalle bleiben.
 
-(Wir haben das elektrische Feld nicht berechnet, da wir nicht wussten in welche Richtung es zeigen soll und wie wir das darstellen sollten.)
+Nach dem Warmlaufen werden dieselben Methoden benutzt um Fixpunkte und Orbits zu finden und als Punkte gegen den zugehörigen $r$-Wert im Bifurkationsdiagramm aufzutragen. Das $r$ wird dabei in Schritten von $\Delta r = 1 \cdot 10^{-3}$ variiert. Da von einem bestimmten Startwert $x_0$ nur manche Orbits erreicht werden können, werden bei uns jeweils zwei Startwerte gewählt, sodass ein komplettes Bifurkationsdiagramm entsteht.
+
+Außerdem soll ein $r_{\infty}$ bestimmt werden, ab dem die Orbitsgröße höher als 64 ist und angenommen wird, dass das Bifurkationsdiagramm chaotisch wird. Zur Bestimmung der Orbitgröße wurde ein Wert $\epsilon = 10^{-4}$ eingeführt, der die Differenz zwischen zwei $x$-Werten angibt, ab der diese als gleich angesehen werden. Das $r_{\infty}$ hängt sehr stark von diesem Wert ab.
 
 \subsection{a)}
-    \vspace*{-2cm}
+    Die logistische Abbildung mit $x_n \in [0, 1]$ ist gegeben durch
+    \begin{equation}
+        x_{n+1} = r x_n (1 - x_n) \;.
+    \end{equation}
+    
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.65\textwidth]{plots/Potential_a.png} \vspace*{-1cm}
-        \caption{Das Potential wenn als AB im Inneren $\Phi(x,y)=1$ und als Dirichlet-RB außen $\Phi=0$ gilt. Es gibt keine Ladungen.}
-        \label{fig:Potential_a}
+        \includegraphics[width=0.7\textwidth]{plots/fixpoints_logistic.png} \vspace{-0.3cm}
+        \caption{Das Bifurkationsdiagramm zu der logistischen Abbildung im Intervall $r \in (0, 4)$.}
+        \label{fig:fixpoints_logistic}
     \end{figure}
     \FloatBarrier
+    
+    Der maximale Wert, den der Parameter annehmen kann ist $r=4$, sonst würde das Maximum nicht mehr in dem Intervall liegen.
+    
+    Hier ist $r_{\infty} \approx 3,572$, also nah an der Feigenbaumkonstante von $3,570 \ldots$.
 
 \subsection{b)}
-    Für diese Teilaufgabe gilt die Randbedingung, dass alle Gitterpunkte an der Seite von $Q$ mit $y=1$ ein Potential $\Phi(x, y=1) = 1$ besitzen und alle anderen Gitterpunkte nicht.
+    Die kubische Abbildung mit $x_n \in [-\sqrt{1+r}, \sqrt{1+r}]$ ist gegeben durch
+    \begin{equation}
+        x_{n+1} = r x_n - x_n^3 \;.
+    \end{equation}
+    Der maximale Wert, den der Parameter annehmen kann ist $r=3$, sonst würden die beiden Extrempunkte nicht mehr in dem Intervall liegen.
 
-    Das numerische Ergebnis soll daraufhin mit dem analytischen Ergebnis verglichen werden.
-    Es ist zu erkennen, dass die beiden Ergebnisse in ihrer Form ähneln, wobei bei der numerischen Lösung das Potential etwas homogener an der Seite verteilt ist.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.7\textwidth]{plots/fixpoints_cubic.png} \vspace{-0.3cm}
+            \caption{Das Bifurkationsdiagramm zu der kubischen Abbildung im Intervall $r \in (0, 3)$.}
+            \label{fig:fixpoints_cubic}
+        \end{figure}
+        \FloatBarrier
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.65\textwidth]{plots/Potential_b.png} \vspace*{-0.7cm}
-        \caption{Das Potential für die oben genannten RB und AB. Es gibt keine Ladungen.}
-        \label{fig:Potential_b}
-    \end{figure}
-    \FloatBarrier
-    \vspace*{-1cm}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.65\textwidth]{plots/Potential_b_anal.png} \vspace*{-0.7cm}
-        \caption{Das analytisch berechnete Potential mit den oben genannten RB und AB. Es gibt keine Ladungen.}
-        \label{fig:Potential_b_anal}
-    \end{figure}
-    \FloatBarrier
-
-\subsection{c)}
-    \vspace*{-1.5cm}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.65\textwidth]{plots/Potential_c.png} \vspace*{-0.7cm}
-        \caption{Das Potential wenn eine Ladung in die Mitte von $Q$ gesetzt wird. Als AB gilt überall $\Phi(x,y) = 0$}
-        \label{fig:Potential_c}
-    \end{figure}
-    \FloatBarrier
-
-\subsection{d)}
-    \vspace*{-1.5cm}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.65\textwidth]{plots/Potential_d.png} \vspace*{-0.7cm}
-        \caption{Das Potential zwei positive Ladungen auf die Gitterplätze $(5,5)^\top$, $(15,15)^\top$ und zwei negative Ladungen auf die Gitterplätze $(5,15)^\top$, $(15,5)^\top$ gesetzt werden.}
-        \label{fig:Potential_d}
-    \end{figure}
-    \FloatBarrier
-
+        Hier ist $r_{\infty} \approx 1,006$.
