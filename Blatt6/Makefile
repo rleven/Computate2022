@@ -1,4 +1,4 @@
-all: data/aufgabe1 data/aufgabe2 main.pdf
+all: data/aufgabe1 data/aufgabe2 plot main.pdf
 
 data/aufgabe1: aufgabe1.cpp | build
 	g++ -O3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
