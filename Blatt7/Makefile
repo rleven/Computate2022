@@ -1,7 +1,7 @@
 all: data/aufgabe1 data/aufgabe2 main.pdf
 
-data/aufgabe1: aufgabe1.cpp | build
-	g++ -O3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
+data/aufgabe1: aufgabe1.py | build
+	python aufgabe1.py
 
 data/aufgabe2: aufgabe2.cpp | build
 	g++ -O3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
@@ -17,8 +17,7 @@ main.pdf: FORCE | build
 	  --halt-on-error \
 	main.tex
 
-code: data/aufgabe1 data/aufgabe2 | build
-	data/aufgabe1
+code: data/aufgabe2 | build
 	data/aufgabe2
 
 plot: code | build
