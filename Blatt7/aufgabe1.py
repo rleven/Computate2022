@@ -1,0 +1,61 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def off(A):
+    ol_reliable = 0
+    for i in range(4):
+        for j in range(4):
+            if i != j:
+                ol_reliable = ol_reliable + A[i, j]*A[i, j]
+            else:
+                continue
+    return ol_reliable
+
+def apq(A):
+    mask = np.copy(A)
+    np.fill_diagonal(mask, 0)
+    max_value = np.max(np.abs(mask))
+    return np.where(np.abs(mask) == max_value)[0]
+
+def calc(A):
+    r = apq(A)
+    i = r[0]
+    j = r[1]
+
+    theta = (A[j, j] - A[i, i])/(2*A[i, j])
+    t = np.sign(theta)/(np.abs(theta) + np.sqrt(theta**2 + 1))
+    c = 1/np.sqrt(1 + t**2)
+    s = t*c
+
+    return theta, t, c, s, r
+
+def newA(A):
+    P = np.eye(4)
+
+    theta, t, c, s, r = calc(A)
+    P[r[0], r[0]] = c
+    P[r[0], r[1]] = s
+    P[r[1], r[0]] = -s
+    P[r[1], r[1]] = c
+
+    return np.multiply(np.multiply(P.T, A), P)
+
+def jacobi(A, eps):
+    counter = 0
+    while True:
+        A = newA(A)
+        counter += 1
+        if off(A) < eps:
+            break
+    return A, counter
+
+mat = np.matrix([[1, -2, 2, 4],[-2, 3, -1, 0],[2, -1, 6, 3],[4, 0, 3, 5]])
+eps = 1e-6
+
+print("Anfangsmatrix:\n",mat)
+a, d = jacobi(mat, eps)
+print("Matrix nach",d,"Schritten:\n",a)
+eigen = np.array([a[0, 0], a[1, 1], a[2, 2], a[3, 3]])
+print("Die Eigenwerte nach Jacobi sind:", eigen)
+w, v = np.linalg.eig(a)
+print("Die Eigenwerte nach numpy.linalg.eig sind:", w)
