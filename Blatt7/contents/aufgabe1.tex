@@ -1,3 +1,35 @@
 \newpage
 \section{Aufgabe 1: Jacobi-Rotationen}
 \label{sec:auf1}
+
+Der Code zu dieser Aufgabe befindet sich in \textit{aufgabe1.py}.
+\newline\\
+Gegeben war die Matrix
+\[
+\begin{pmatrix}
+    1 & -2 & 2 & 4\\
+    -2 & 3 & -1 & 0\\
+    2 & -1 & 6 & 3\\
+    4 & 0 & 3 & 5
+\end{pmatrix}
+\]
+, die mittels der Jacobi-Rotation in ihre Diagonalform mit Eigenwerten transformiert werden sollte.\\
+Als Ergebnis dieser Jacobi-Rotation mit Abbruchbedingung $\sum_{i\neq j}|a_{ij}|^2 < 10^{-6}$ erhielten wir für die Eigenwerte:
+\[
+\begin{pmatrix}
+    0.64807889 & 0 & 0 & \approx0\\
+    0 & 3 & 0 & 0\\
+    0 & 0 & 6 & 0\\
+    \approx0 & 0 & 0 & 3.24039446
+\end{pmatrix}
+\]
+Die mittels \textit{numpy.linalg.eig(A)} berechneten Eigenwerte der Anfangsmatrix sind:
+\[
+\begin{pmatrix}
+    0.64807887 & 0 & 0 & 0\\
+    0 & 3 & 0 & 0\\
+    0 & 0 & 6 & 0\\
+    0 & 0 & 0 & 3.24039448
+\end{pmatrix}
+\]
+Die Unterschiede sind nur bei zwei Eigenwerten zu beobachten und betragen ca. \SI{0.0000006}{\percent} bis \SI{0.0000031}{\percent}.
