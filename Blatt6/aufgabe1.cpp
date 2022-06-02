@@ -127,7 +127,7 @@ void logisticBifurcationDiagram(uint x_0_count, double delta_r)
     
     // Warmlaufen ------------------------------------------------------------------------------
     double warmlaufen_x;
-    uint N_steps_warmlaufen = 200;
+    uint N_steps_warmlaufen = 10000;
 
 
     // finding fixpoints and orbitals ----------------------------------------------------------
@@ -138,7 +138,7 @@ void logisticBifurcationDiagram(uint x_0_count, double delta_r)
     double chaos_r = r_max;
     
     VectorXd fixpoints;
-    double epsilon = pow(10, -4);                       /*the maximum difference between two x from two iterations for them to be counted as one point*/
+    double epsilon = pow(10, -6);                       /*the maximum difference between two x from two iterations for them to be counted as one point*/
     for(int x_0_counter = 0; x_0_counter < x_0_count; x_0_counter++)
     {
         x_0 = x_0_vec(x_0_counter);
@@ -160,7 +160,7 @@ void logisticBifurcationDiagram(uint x_0_count, double delta_r)
             outputFile_fixpoints_logistic << r << "\t" << fixpoints.transpose() << std::endl;
         }
     }
-    std::cout << "Die bestimmte Feigenbaumkonstante der logistischen Abb.:   " << chaos_r << std::endl;
+    std::cout << "Der r-Wert ab dem Chaos entsteht der logistischen Abb.:   " << chaos_r << std::endl;
 
     outputFile_fixpoints_logistic.close();
 }
@@ -183,7 +183,7 @@ void cubicBifurcationDiagram(uint x_0_count, double delta_r)
     
     // Warmlaufen ------------------------------------------------------------------------------
     double warmlaufen_x;
-    uint N_steps_warmlaufen = 200;
+    uint N_steps_warmlaufen = 10000;
 
 
     // finding fixpoints and orbitals ----------------------------------------------------------
@@ -194,7 +194,7 @@ void cubicBifurcationDiagram(uint x_0_count, double delta_r)
     double chaos_r = r_max;
     
     VectorXd fixpoints;
-    double epsilon = pow(10, -4);                       /*the maximum difference between two x from two iterations for them to be counted as one point*/
+    double epsilon = pow(10, -6);                       /*the maximum difference between two x from two iterations for them to be counted as one point*/
     for(int x_0_counter = 0; x_0_counter < x_0_count; x_0_counter++)
     {
         x_0 = x_0_vec(x_0_counter);
@@ -216,7 +216,7 @@ void cubicBifurcationDiagram(uint x_0_count, double delta_r)
             outputFile_fixpoints_cubic << r << "\t" << fixpoints.transpose() << std::endl;
         }
     }
-    std::cout << "Die bestimmte Feigenbaumkonstante der kubischen Abb.:   " << chaos_r << std::endl;
+    std::cout << "Der r-Wert ab dem Chaos entsteht der kubischen Abb.:   " << chaos_r << std::endl;
 
     outputFile_fixpoints_cubic.close();
 }
