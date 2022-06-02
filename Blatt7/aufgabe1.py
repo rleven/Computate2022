@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Berechnung der Abbruchbedingung
 def off(A):
     ol_reliable = 0
     for i in range(4):
@@ -11,12 +12,14 @@ def off(A):
                 continue
     return ol_reliable
 
+# Berechnung der Position des Maximalwertes ohne Diagonale
 def apq(A):
     mask = np.copy(A)
     np.fill_diagonal(mask, 0)
     max_value = np.max(np.abs(mask))
     return np.where(np.abs(mask) == max_value)[0]
 
+# Berechnung der Komponenten der Orthogonalmatrix P
 def calc(A):
     r = apq(A)
     i = r[0]
@@ -29,6 +32,7 @@ def calc(A):
 
     return theta, t, c, s, r
 
+# Berechnung der Ähnlichkeitstransformation
 def newA(A):
     P = np.eye(4)
 
@@ -40,6 +44,7 @@ def newA(A):
 
     return np.multiply(np.multiply(P.T, A), P)
 
+# Berechnung der Eigenwerte mittels jacobi-Rotation
 def jacobi(A, eps):
     counter = 0
     while True:
@@ -49,13 +54,16 @@ def jacobi(A, eps):
             break
     return A, counter
 
-mat = np.matrix([[1, -2, 2, 4],[-2, 3, -1, 0],[2, -1, 6, 3],[4, 0, 3, 5]])
-eps = 1e-6
+mat = np.matrix([[1, -2, 2, 4],[-2, 3, -1, 0],[2, -1, 6, 3],[4, 0, 3, 5]])  #Anfangsmatrix
+eps = 1e-6  #Abbruchbedingung
 
 print("Anfangsmatrix:\n",mat)
+
 a, d = jacobi(mat, eps)
 print("Matrix nach",d,"Schritten:\n",a)
+
 eigen = np.array([a[0, 0], a[1, 1], a[2, 2], a[3, 3]])
 print("Die Eigenwerte nach Jacobi sind:", eigen)
+
 w, v = np.linalg.eig(a)
 print("Die Eigenwerte nach numpy.linalg.eig sind:", w)
