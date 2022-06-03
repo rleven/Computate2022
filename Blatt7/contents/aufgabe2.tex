@@ -2,3 +2,35 @@
 \section{Aufgabe 2: Householder mit QR-Iteration}
 \label{sec:auf2}
 
+Hier wurde die QR-Zerlegung zur Diagonalisierung einer Matrix implementiert. Dazu wurde der Householder Algorithmus implementiert um die Matrix zuerst in eine tridiagonale Form zu bringen.
+
+Gegeben waren die symmetrischen $N \times N$-Matrizen
+\begin{equation}
+    M_{k.l} = k + l + \delta_{k,l} \qquad 0 \leq k, \;\; l < N \;.
+\end{equation}
+Es wurden die Eigenwerte der Matrizen der Größe 10, 100 und 1000 berechnet. Die Anzahl der Iterationsschritte wird dabei bei den ersten beiden Matrizen gleich 1000 gewählt. Bei der letzten Matrix werden nur 10 Iterationsschritte durchlaufen, da der Computer sonst viel zu lange brauchen würde. Die Eigenwerte stehen in den jeweiligen csv-Dateien.
+
+Anschließend sollen die Laufzeiten mit denen des iterativen Jacobi Algorithmus verglichen werden, welcher bei einem $\text{off} = \sum_{r \neq s} a_{rs}^2 < \epsilon$ abbrechen soll. $\epsilon = 10^{-6}$ gilt dabei für die ersten beiden Matrizen und $\epsilon = 1$ für die letzte Matrix aus dem gleichen Grund wie bei der QR-Iteration.
+
+\setlength{\arrayrulewidth}{0.25mm}
+\renewcommand{\arraystretch}{1.3}
+\begin{table}[h!]
+    \begin{center}
+      \caption{Die Laufzeiten für QR- und Jacobi-Iterationen.}
+      \label{tab:table1}
+      \begin{tabular}{c||c|c}
+        $\mathbf{N}$ & \textbf{QR} [s] & \textbf{Jacobi} [s] \\
+        \hline\hline
+        10 & 0.015369 & 0.000137 \\
+        \hline
+        100 & 12.4085 & 1.67832 \\
+        \hline
+        1000 & 1157.86 & ----- \\
+      \end{tabular}
+    \end{center}
+  \end{table}
+
+Der Diagonalisierung mittels QR-Iteration braucht $N^2$ Schritte, wohingegen die Jacobi-Iteration $N^3$ Schritte braucht.
+Bei kleinen Matrizen ist die Laufzeit der Jacobi-Iteration wegen dem Vorfaktor noch kleiner. Bei größeren Matrizen braucht die Jacobi-Iteration jedoch viel länger um die gleiche Genauigkeit wie die QR-Iteration zu erreichen. Bei einer Größe von $N=1000$ hat das Programm jedoch so lange gebraucht, dass wir es abgebrochen haben.
+
+
