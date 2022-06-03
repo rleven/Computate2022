@@ -3,5 +3,20 @@
 \label{sec:auf0}
 
 \subsection{1) Welche Diagonalisierungsalgorithmen kennen Sie und von welcher Ordnung ist ihre Laufzeit?}
+Die uns bekannten Diagonalisierungsalgorithmen sind:
+\begin{itemize}
+    \item Jacobi-Rotation
+    \item Householder Algorithmus
+    \item QR-Iteration
+    \item Potenzmethode
+\end{itemize}
+Die Jacobi-Rotation hat eine Laufzeit von $23N^3$ bis $40N^3$ bis die Eigenwerte bestimmt sind.
+\newline\\
+Der Householder Algorithmus hat eine Laufzeit, die ähnlich zur Jacobi-Rotation ist, also $\mathcal{O}(N^3)$, jedoch ist der Vorfaktor hier wesentlich kleiner.
+\newline\\
+Die QR-Iteration hat eine Laufzeit von $\mathcal{O}(N^2)$.
+\newline\\
+Die Potenzmethode ist sehr praktikabel für sehr große $N$. Üblicherweise braucht sie eine Laufzeit von nur $\mathcal{O}(N)$.
 
 \subsection{2) Warum ist die direkte Diagonalisierung größerer Systeme in der vollständigen Zustandsbasis oftmals nicht sinnvoll?}
+Weil das zu viele Iterationen zur Folge haben könnte, sodass die Laufzeit zu hoch wäre.
