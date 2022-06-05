@@ -212,32 +212,32 @@ int main()
 
     uint matrixSize[] = {10, 100, 1000};
 
-    // // diagonalize with iterative QR algorithm
-    // uint iterationCount[] = {1000, 1000, 10};
-    // for(uint i = 0; i < sizeof(matrixSize)/sizeof(matrixSize[0]); i++)
-    // {
-    //     std::ofstream outputFile;
-    //     outputFile.open("data/Eigenwerte_QR_" + std::to_string(matrixSize[i]) + ".csv", std::ios_base::trunc);
+    // diagonalize with iterative QR algorithm
+    uint iterationCount[] = {1000, 1000, 10};
+    for(uint i = 0; i < sizeof(matrixSize)/sizeof(matrixSize[0]); i++)
+    {
+        std::ofstream outputFile;
+        outputFile.open("data/Eigenwerte_QR_" + std::to_string(matrixSize[i]) + ".csv", std::ios_base::trunc);
         
-    //     M = initializeMatrix(matrixSize[i]);
-    //     tridiagonalM = householderAlgorithm(M);
+        M = initializeMatrix(matrixSize[i]);
+        tridiagonalM = householderAlgorithm(M);
         
-    //     /***time measurement***/
-    //     /*******************************************/ 
-    //     // time = 0.0;
-    //     startTime = clock();
+        /***time measurement***/
+        /*******************************************/ 
+        // time = 0.0;
+        startTime = clock();
 
-    //     diagonalM = iterativeQRdecomposition(tridiagonalM, iterationCount[i]);
+        diagonalM = iterativeQRdecomposition(tridiagonalM, iterationCount[i]);
 
-    //     time = clock() - startTime;
-    //     time = time / CLOCKS_PER_SEC;
-    //     /*******************************************/ 
+        time = clock() - startTime;
+        time = time / CLOCKS_PER_SEC;
+        /*******************************************/ 
         
-    //     VectorXd EW = diagonalM.diagonal();
-    //     std::sort(EW.data(), EW.data()+EW.size());                          /*sort the EW for better comparison*/
-    //     outputFile << "Laufzeit:  " << time << "s\n\n" << "Eigenwerte mit QR Iteration:\n" << EW << std::endl;
-    //     outputFile.close();
-    // }
+        VectorXd EW = diagonalM.diagonal();
+        std::sort(EW.data(), EW.data()+EW.size());                          /*sort the EW for better comparison*/
+        outputFile << "Laufzeit:  " << time << "s\n\n" << "Eigenwerte mit QR Iteration:\n" << EW << std::endl;
+        outputFile.close();
+    }
 
     // diagonalize with iterative Jacobi algorithm
     double epsilon[] = {pow(10, -6), pow(10, -6), 1};
