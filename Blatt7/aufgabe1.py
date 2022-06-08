@@ -14,10 +14,8 @@ def off(A):
 
 # Berechnung der Position des Maximalwertes ohne Diagonale
 def apq(A):
-    mask = np.copy(A)
-    np.fill_diagonal(mask, 0)
-    max_value = np.max(np.abs(mask))
-    return np.where(np.abs(mask) == max_value)[0]
+    triag = np.abs(np.triu(A, k=1))
+    return np.unravel_index(np.argmax(triag), triag.shape)
 
 # Berechnung der Komponenten der Orthogonalmatrix P
 def calc(A):
