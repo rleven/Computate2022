@@ -1,7 +1,7 @@
 all: data/aufgabe1 data/aufgabe2 main.pdf
 
 data/aufgabe1: aufgabe1.cpp | build
-	g++ -O3 -Wall -ffast-math aufgabe1.cpp -o data/aufgabe1
+	g++ -O3 -Wall -ffast-math  -std=c++17 aufgabe1.cpp profiler.cpp -o data/aufgabe1
 
 data/aufgabe2: aufgabe2.py| build
 	python aufgabe2.py

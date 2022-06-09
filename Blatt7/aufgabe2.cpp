@@ -93,6 +93,7 @@ MatrixXd iterativeQRdecomposition(MatrixXd M, uint iterationCount)
     MatrixXd P;                                                 /*Jacobi matrix*/
     double diagElement, secDiagElement;                         /*diagonal and secondary diagonal element*/
     double c, s, t;
+    std::cout << diagonalM << "\n" << std::endl;
 
     for(uint counter = 0; counter < iterationCount; counter++)
     {
@@ -117,7 +118,8 @@ MatrixXd iterativeQRdecomposition(MatrixXd M, uint iterationCount)
             P.block(n, n, 2, 2) << c, s,                        /*construct the Jacobi matrix*/
                                   -s, c;
 
-            Q.transpose() = P * Q.transpose();                  /*construct the transform matrix*/
+            // Q.transpose() = P * Q.transpose();                  /*vorsichtig sein, wenn auf der linken Seite funktionen stehen*/
+            Q = Q * P.transpose();                              /*construct the transform matrix*/
             tempDiagonalM = P * tempDiagonalM;                  /*rotate the lower secondary element away*/
         }
         diagonalM = Q.transpose() * (diagonalM * Q);            /*iteration step: get new matrix from old one*/
@@ -210,10 +212,10 @@ int main()
     MatrixXd tridiagonalM;
     MatrixXd diagonalM;
 
-    uint matrixSize[] = {10, 100, 1000};
+    uint matrixSize[] = {10/*, 100, 1000*/};
 
     // diagonalize with iterative QR algorithm
-    uint iterationCount[] = {1000, 1000, 10};
+    uint iterationCount[] = {100/*, 100, 10*/};
     for(uint i = 0; i < sizeof(matrixSize)/sizeof(matrixSize[0]); i++)
     {
         std::ofstream outputFile;
@@ -239,29 +241,29 @@ int main()
         outputFile.close();
     }
 
-    // diagonalize with iterative Jacobi algorithm
-    double epsilon[] = {pow(10, -6), pow(10, -6), 1};
-    for(uint i = 0; i < sizeof(matrixSize)/sizeof(matrixSize[0]); i++)
-    {
-        std::ofstream outputFile;
-        outputFile.open("data/Eigenwerte_Jacobi_" + std::to_string(matrixSize[i]) + ".csv", std::ios_base::trunc);
+    // // diagonalize with iterative Jacobi algorithm
+    // double epsilon[] = {pow(10, -6), pow(10, -6), 1};
+    // for(uint i = 0; i < sizeof(matrixSize)/sizeof(matrixSize[0]); i++)
+    // {
+    //     std::ofstream outputFile;
+    //     outputFile.open("data/Eigenwerte_Jacobi_" + std::to_string(matrixSize[i]) + ".csv", std::ios_base::trunc);
         
-        M = initializeMatrix(matrixSize[i]);
+    //     M = initializeMatrix(matrixSize[i]);
 
-        /***time measurement***/
-        /*******************************************/ 
-        // time = 0.0;
-        startTime = clock();
+    //     /***time measurement***/
+    //     /*******************************************/ 
+    //     // time = 0.0;
+    //     startTime = clock();
 
-        diagonalM = jacobiRotation(M, epsilon[i]);
+    //     diagonalM = jacobiRotation(M, epsilon[i]);
 
-        time = clock() - startTime;
-        time = time / CLOCKS_PER_SEC;
-        /*******************************************/ 
+    //     time = clock() - startTime;
+    //     time = time / CLOCKS_PER_SEC;
+    //     /*******************************************/ 
         
-        outputFile << "Laufzeit:  " << time << "s\n\n" << "Eigenwerte mit Jacobi Iteration:\n" << diagonalM.diagonal() << std::endl;
-        outputFile.close();
-    }
+    //     outputFile << "Laufzeit:  " << time << "s\n\n" << "Eigenwerte mit Jacobi Iteration:\n" << diagonalM.diagonal() << std::endl;
+    //     outputFile.close();
+    // }
 
     return 0;
 }
