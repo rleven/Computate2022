@@ -89,8 +89,10 @@ plt.legend(loc="upper right")
 
 try:
     plt.savefig("plots/a2b.pdf")
-except:
+except FileNotFoundError:
     plt.show()
+
+
 
 # plt.scatter(pos1[0, :, -1], pos1[1, :, -1])
 # plt.xlim((-5, 5))
