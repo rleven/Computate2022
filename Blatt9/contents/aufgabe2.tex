@@ -1,37 +1,4 @@
 \newpage
-\section{Aufgabe 2: Anharmonischer Oszillator}
+\section{Aufgabe 2: Partikelschwarmoptimierung}
 \label{sec:auf2}
 
-\subsection{a)}
-Es gilt für die stationäre Eigenwertgleichung:
-\begin{equation}
-    \hat{H} \ket{\psi(x)} = E \ket{\psi(x)}
-\end{equation}
-Also ausformuliert:
-\begin{equation}
-    \left(-\frac{\hbar^2}{2m}\partial^2_x + \frac{1}{2}m\omega^2x^2 + \lambda x^4\right)\psi(x) = E\psi(x)
-    \label{eq:fullschro}
-\end{equation}
-Für $x = \alpha\xi$ ist die Ableitung dann:
-\begin{equation}
-    \partial_x = \alpha \partial_{\xi}
-\end{equation}
-Eingesetzt in \autoref{eq:fullschro} und zusätzlich etwas umgeformt ergibt sich:
-\begin{equation}
-    \left(-\partial_{\xi}^2 + \frac{m^2\omega^2}{\hbar^2}\xi^2 + \lambda\cdot \frac{2\alpha^2m}{\hbar^2} \xi^4\right) \psi(\xi) = \frac{2m\beta}{\alpha^2\hbar^2}\epsilon\ \psi(\xi)
-    \label{eq:halfform}
-\end{equation}
-Daraus lassen sich bereits die Einheiten der Länge und Energien ablesen.\\
-Sie beträgt:
-\begin{equation}
-    \left[\xi\right] = \frac{\hbar}{m\omega} \quad\text{und}\quad \left[\epsilon\right] = \frac{\alpha^2\hbar^2}{2m\beta}
-\end{equation}
-Damit wird die Gleichung zu:
-\begin{equation}
-    \left(-\partial_{\xi}^2 + \xi^2 + \lambda\cdot \frac{2\alpha^2\hbar^2}{m^3\omega^4} \xi^4\right) \psi(\xi) = \epsilon\ \psi(\xi)
-    \label{eq:fullform}
-\end{equation}
-Aus \autoref{eq:fullform} ist die Relation von $\tilde{\lambda}$ zu $\lambda$ ablesbar:
-\begin{equation}
-    \tilde{\lambda} = \frac{2\alpha^2\hbar^2}{m^3\omega^4}\lambda
-\end{equation}
