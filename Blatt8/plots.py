@@ -22,13 +22,13 @@ axs[2].set_xlabel(r"$N$")
 plt.tight_layout()
 plt.savefig("plots/Laufzeiten.png")
 
-plt.show()
+# plt.show()
 plt.close()
 
 
 ### Aufgabe 1c): Plotten und extrapolieren der Gesamtlaufzeit
-def fit_function(x, a, b, c, d):
-    return a*x**3 + b*x**2 + c*x + d
+def fit_function(x, a, b):
+    return a*x**b
 
 t_gesamt = t[1,:] + t[2,:] + t[3,:]
 
@@ -38,14 +38,19 @@ ax.plot(N, t_gesamt, ".", markersize=2)
 ax.set_ylabel(r"Gesamtlaufzeit [s]")
 ax.set_xlabel(r"$N$")
 
-params, cov = curve_fit(fit_function, N, t_gesamt)
+unteresLimit = 200
+params, cov = curve_fit(fit_function, N[unteresLimit:], t_gesamt[unteresLimit:])
 N_fit = np.linspace(0, 10**6, num=10**6)
-ax.plot(N_fit, fit_function(N_fit, *params))
+ax.plot(N_fit[unteresLimit:], fit_function(N_fit[unteresLimit:], *params))
 ax.set_xscale("log")
 ax.set_yscale("log")
 
 plt.tight_layout()
 plt.savefig("plots/Gesamtlaufzeit.png")
 
-# plt.show()
+plt.show()
 plt.close()
+
+laufzeit_million = fit_function(10**6, *params)
+print("Parameter des Fits:", params)
+print("Laufzeit für N=10**6:", laufzeit_million, "s,   ", (laufzeit_million/3600)/24, "Tage")
