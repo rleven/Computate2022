@@ -4,48 +4,55 @@
 #include <fstream>
 #include <Eigen/Dense>
 
-#include "profiler.h"
-
 using namespace Eigen;
 
-int main(){
-    VectorXi N_lin = VectorXi::LinSpaced(1000, 1, 1000);
-    VectorXd N_log = pow(2, ArrayXd::LinSpaced(30, 1, 30));
+double gFunction(VectorXd t);
+MatrixXd determineSupportingPoints(VectorXd xvec_0, VectorXd pvec);
+void bisection(VectorXd xvec_0, VectorXd pvec);
 
-    MatrixXd M;
-    VectorXd x, b;
+// ========================================================================================================
+// a function to test the self-implemented bisection method
+double gFunction(VectorXd t)
+{
+    double x = t(0);
+    double y = t(1);
+    double g = 2*x*x + x*x * y*y;
+    return g;
+}
 
-    Profiler::init(3);
 
-    std::ofstream outputFile;
-    outputFile.open("data/Laufzeiten.csv");
+// ========================================================================================================
+// determine the supporting points (Stützstellen) of the starting intervall from the given starting point "xvec_0"
+MatrixXd determineSupportingPoints(VectorXd xvec_0, VectorXd pvec)
+{   
+    int N = xvec_0.size();
+    MatrixXd supportingPoints(N, 3);
+    VectorXd yvec_0(N), zvec_0(N);
 
-    for(uint i = 0; i < N_lin.size(); i++)
+    do
     {
-        // Erstellung der Matrix
-        Profiler::reset(0);
-        Profiler::start(0);
-        M = MatrixXd::Random(N_lin(i), N_lin(i));
-        Profiler::stop(0);
-        b = VectorXd::Random(N_lin(i));
-
-        // QR-Zerlegung
-        Profiler::reset(1);
-        ColPivHouseholderQR<MatrixXd> QR(M.rows(), M.cols());
-        Profiler::start(1);
-        QR.compute(M);
-        Profiler::stop(1);
-
-        // Lösen des LGS
-        Profiler::reset(2);
-        Profiler::start(2);
-        x = QR.solve(b);
-        Profiler::stop(2);
-
-        outputFile << N_lin(i) << "\t" << Profiler::getTimeInS(0) << "\t" << Profiler::getTimeInS(1) << "\t" << Profiler::getTimeInS(2) << std::endl;
+        zvec_0 += pvec;
     }
+    while(gFunction(xvec_0) > gFunction(zvec_0));
 
-    outputFile.close();
+    supportingPoints.col(0) = xvec_0;
 
+    return supportingPoints;
+}
+
+
+// ========================================================================================================
+// implement the bisection method (Intervallhalbierungsverfahren) along a given direction "pvec"
+void bisection(VectorXd xvec_0, VectorXd pvec)
+{
+
+}
+
+
+int main()
+{
+    VectorXd startingVector(4);
+    startingVector << 1, 2, 3, 4;
+    std::cout << startingVector.size() << std::endl;
     return 0;
 }
