@@ -1,9 +1,9 @@
-all: data/aufgabe1 data/aufgabe2 main.pdf
+all: data/aufgabe1 plots/a2b.pdf main.pdf
 
 data/aufgabe1: aufgabe1.cpp | build
 	g++ -O3 -Wall -ffast-math  -std=c++17 aufgabe1.cpp -o data/aufgabe1
 
-data/aufgabe2: aufgabe2.py| build
+plots/a2b.pdf: aufgabe2.py| build
 	python aufgabe2.py
 
 main.pdf: FORCE | build
