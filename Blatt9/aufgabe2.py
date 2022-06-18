@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 # Zuteilung der zufälligen Positionen
 def randpos(N):
@@ -9,6 +10,7 @@ def randpos(N):
 def randvel(N):
     return np.random.uniform(-1, 1, (2, N))
 
+# Funktionswert
 def fun(pos):
     return (pos[0] - 1.9)**2 + (pos[1] - 2.1)**2 + 2*np.cos(4*pos[0] + 2.8) + 3*np.sin(2*pos[1] + 0.6)
 
@@ -92,14 +94,47 @@ try:
 except FileNotFoundError:
     plt.show()
 
+''' Ausführung des Aufgabenteils c) '''
 
+x0 = np.arange(-6, 6, step=0.1)
+y0 = x0.copy()
 
-# plt.scatter(pos1[0, :, -1], pos1[1, :, -1])
-# plt.xlim((-5, 5))
-# plt.ylim((-5, 5))
-# plt.xticks(np.arange(-5, 5, step=1))
-# plt.yticks(np.arange(-5, 5, step=1))
+X, Y = np.meshgrid(x0, y0)
 
-# plt.grid()
-# plt.tight_layout()
-# plt.show()
+Z = (X - 1.9)**2 + (Y - 2.1)**2 + 2*np.cos(4*X + 2.8) + 3*np.sin(2*Y + 0.6)
+
+fig, ax = plt.subplots()
+line, = ax.plot([], [], linestyle="", marker='.', color='red')
+ax.set_xlim(-5, 5)
+ax.set_ylim(-5, 5)
+
+def update_points(i):
+    x = pos1[0,:,i]
+    y = pos1[1,:,i]
+    line.set_data(x, y)
+    return line
+
+# def update_quiver(j, ax, fig):
+#     x = pos1[0,:,j]
+#     y = pos1[1,:,j]
+#     u = vel1[0,:,j]
+#     v = vel1[1,:,j]
+#     Q = ax.quiver(x, y, u, v, color='lime')
+#     Q.set_UVC(u, v)
+#     return Q,
+
+# def init_quiver():
+#     global Q
+#     x = pos1[0,:,0]
+#     y = pos1[1,:,0]
+#     vx = vel1[0,:,0]
+#     vy = vel1[1,:,0]
+#     Q = ax.quiver(x, y, vx, vy, color='lime')
+#     return  Q,
+
+animation0 = FuncAnimation(fig, func=update_points, frames=100, interval=70, blit=False)
+#animation1 = FuncAnimation(fig, update_quiver, frames = 100, interval=1, fargs=(ax, fig))
+
+plt.contour(X, Y, Z, 30)
+plt.colorbar()
+plt.show()
