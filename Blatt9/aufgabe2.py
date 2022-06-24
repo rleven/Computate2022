@@ -35,6 +35,7 @@ def local_best(loc, pos):
     return loc
 
 # Definitionen
+np.random.seed(14)
 w = 0.8
 c = 0.1
 N = 10
@@ -75,15 +76,15 @@ def swarm(pos, vel, cycles):
 pos = randpos(N)
 vel = randvel(N)
 
-pos1, vel1, glo, loc = swarm(pos, vel, 100)
+pos1, vel1, glo, loc = swarm(pos, vel, 300)
 
 print("Minimum am Ende:", fkt(pos1[:, :, -1]))
 
 ''' Ausführung des Aufgabenteils b) '''
 
 for i in range(N):
-    plt.plot(np.arange(101), loc[i,:], linewidth=1, label="Pers. Min Nr."+str(i+1))
-plt.plot(np.arange(101), glo, '-r', linewidth=2, label="Global Min")
+    plt.plot(np.arange(301), loc[i,:], linewidth=1, label="Pers. Min Nr."+str(i+1))
+plt.plot(np.arange(301), glo, '-r', linewidth=2, label="Global Min")
 
 plt.xlabel("Anzahl an Iterationen") 
 plt.ylabel("Wert der Minima")
@@ -115,13 +116,13 @@ def update_points(i):
     return line
 
 # def update_quiver(j, ax, fig):
+#     ax.clear()
 #     x = pos1[0,:,j]
 #     y = pos1[1,:,j]
 #     u = vel1[0,:,j]
 #     v = vel1[1,:,j]
 #     Q = ax.quiver(x, y, u, v, color='lime')
 #     Q.set_UVC(u, v)
-#     return Q,
 
 # def init_quiver():
 #     global Q
