@@ -2,3 +2,82 @@
 \section{Aufgabe 2: Beliebige Verteilungen}
 \label{sec:auf2}
 
+\subsection{a)}
+    Hier sollte die Box-Müller-Transformation implementiert werden, mit der aus zwei gleichverteilten Zufallsvariablen eine zweidimensionale Standardnormalverteilung
+    \begin{equation}
+        f(x_1, x_2)  = \frac{1}{\sqrt{2 \pi}} e^{\frac{-(x_1^2 + x_2^2)^2}{2}}
+    \end{equation}
+    erzeugt werden kann.
+    Die Transformation sieht aus wie folgt:
+    \begin{align}
+        x_1 &= \sqrt{-2 \log(u_1)} \cos(2 \pi u_2) \\
+        x_2 &= \sqrt{-2 \log(u_1)} \sin(2 \pi u_2) \\
+    \end{align}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{plots/BoxMueller.png} \vspace*{-0.5cm}
+        \caption{Hier ist die mit der Box-Müller-Methode bestimmte und analytische 2d-Standardnormalverteilung in 100 Bins aufgetragen.}
+        \label{fig:BoxMueller}
+    \end{figure}
+    \FloatBarrier
+
+    Es ist die Funktion
+    gegeben.
+    Zuerst wurde die Methode \verb|determineSupportingPoints()| implementiert, um die drei für die Intervallhalbierung nötigen Stützstellen grob zu bestimmen.
+
+    Danach wird die Methode \verb|bisection()| für die beiden Anfangsbedingungen, bei einer Abbruchbedingung von $\epsilon = 10^{-7}$, durchgeführt und man erhält die lokalen Minima
+    \begin{equation}
+        \vec{x}_{\mathrm{min}} \approx 
+        \begin{pmatrix}
+            0 \\ 0
+        \end{pmatrix} \; , \qquad
+        \vec{x}_{\mathrm{min}} \approx 
+        \begin{pmatrix}
+            0 \\ 1
+        \end{pmatrix} \; .
+    \end{equation}
+    
+
+
+\subsection{b)}
+    Der zentrale Grenzwertsatz besagt, dass wenn die Summe $S_n = \sum_{i=1}^n u_i$ von $n$ gleichverteilten Zufallsvariablen $u_i$ gebildet und daraus die Variable
+    \begin{equation}
+        Z_n = \frac{S_n - n\mu}{\sigma \sqrt{n}}
+    \end{equation}
+    erzeugt wird, die Wahrscheinlichkeitsdichte von $\lim_{n \rightarrow \infty} Z_n$ gegen die Standardnormalverteilung mit $\mu=0$ und $\sigma=1$ geht.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/zentralerGrenzwertsatz.png} \vspace*{-0.5cm}
+        \caption{Hier ist die mit dem zentralen Grenzwertsatz bestimmte und analytische Standardnormalverteilung in 50 Bins aufgetragen.}
+        \label{fig:zentralerGrenzwertsatz}
+    \end{figure}
+    \FloatBarrier
+
+    Ein Nachteil könnte bei dieser Methode sein, dass man bei einer endlichen kleineren Anzahl an gleichverteilten Zufallsvariablen eine Gaußverteilung bekommt, deren Mittelwert und Standardabweichung nicht bekannt ist.
+
+    Aus diesem Grund wurde eine analytische Gaußverteilung mit den Parametern
+    \begin{align*}
+        \mu \approx 1,731 \\
+        \sigma \approx 0,292
+    \end{align*}
+    an die berechnete Verteilung gefittet.
+
+
+\subsection{d)}
+    Es soll die Transformation gefunden werden, die die Cauchy-Verteilung
+    \begin{equation}
+        p(x) = \frac{1}{\pi} \frac{1}{1 + x^2}
+    \end{equation}
+    mit $x \in (-\infty, \infty)$ aus einer Gleichverteilung $f(u)=\mathrm{const}$ mit $x \in [0, 1)$ erzeugt.
+
+    Dazu wird zuerst die Verteilungsfunktion $F_X(x)$ von $p(x)$ durch integrieren in den Grenzen $[0, x]$ bestimmt.
+    Damit die Wahrscheinlichkeiten $P(X < x) = F_X(x)$ nicht negativ sind, wird $\frac{1}{2}$ addiert:
+    \begin{equation}
+        F_X(x) = \frac{1}{2} + \frac{1}{\pi} \arctan(x)
+    \end{equation}
+    Umformen nach x ergibt die Transformation
+    \begin{equation}
+        x = \tan(\pi u - \frac{\pi}{2}) \;.
+    \end{equation}
+

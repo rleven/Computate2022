@@ -11,8 +11,10 @@ def function(x, y):
     return 1/(1 + (np.exp(-10*(x*y-3)**2))/(x**2 + y**2))
 
 
-x = np.linspace(-6, 6, 500)
-y = np.linspace(-6, 6, 500)
+x = np.linspace(-100, 100, 200)
+y = np.linspace(-100, 100, 200)
+x = np.linspace(-6, 6, 300)
+y = np.linspace(-6, 6, 300)
 X, Y = np.meshgrid(x, y)
 z = function(x, y)
 Z = function(X, Y)
