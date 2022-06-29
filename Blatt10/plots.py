@@ -67,11 +67,11 @@ names = ['Mittelwert', 'Standardabweichung']
 for param, name in zip(params, names):
     print('{0}: {1:.3f}'.format(name, param))
 
-ax.plot(bin_centers, gauss1D(bin_centers, *params), '.', ms=7, label='Analytische Verteilung')
+ax.plot(bin_centers, gauss1D(bin_centers, *params), '-', ms=7, label='Analytische Verteilung')
 plt.legend(loc='best')
 
 plt.tight_layout()
 plt.savefig("plots/zentralerGrenzwertsatz.png")
 
-# plt.show()
+plt.show()
 plt.close()

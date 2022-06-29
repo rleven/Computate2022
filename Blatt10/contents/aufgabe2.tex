@@ -19,32 +19,14 @@
         \caption{Hier ist die mit der Box-Müller-Methode bestimmte und analytische 2d-Standardnormalverteilung in 100 Bins aufgetragen.}
         \label{fig:BoxMueller}
     \end{figure}
-    \FloatBarrier
-
-    Es ist die Funktion
-    gegeben.
-    Zuerst wurde die Methode \verb|determineSupportingPoints()| implementiert, um die drei für die Intervallhalbierung nötigen Stützstellen grob zu bestimmen.
-
-    Danach wird die Methode \verb|bisection()| für die beiden Anfangsbedingungen, bei einer Abbruchbedingung von $\epsilon = 10^{-7}$, durchgeführt und man erhält die lokalen Minima
-    \begin{equation}
-        \vec{x}_{\mathrm{min}} \approx 
-        \begin{pmatrix}
-            0 \\ 0
-        \end{pmatrix} \; , \qquad
-        \vec{x}_{\mathrm{min}} \approx 
-        \begin{pmatrix}
-            0 \\ 1
-        \end{pmatrix} \; .
-    \end{equation}
-    
-
+    \FloatBarrier   
 
 \subsection{b)}
-    Der zentrale Grenzwertsatz besagt, dass wenn die Summe $S_n = \sum_{i=1}^n u_i$ von $n$ gleichverteilten Zufallsvariablen $u_i$ gebildet und daraus die Variable
+    Der zentrale Grenzwertsatz besagt, dass wenn die Summe $S_n = \sum_{i=1}^n u_i$ von $n$ gleichverteilten Zufallsvariablen $u_i$ mit $\mu = 1/2$ und $\sigma = 1/\sqrt{12}$ gebildet und daraus die Variable
     \begin{equation}
         Z_n = \frac{S_n - n\mu}{\sigma \sqrt{n}}
     \end{equation}
-    erzeugt wird, die Wahrscheinlichkeitsdichte von $\lim_{n \rightarrow \infty} Z_n$ gegen die Standardnormalverteilung mit $\mu=0$ und $\sigma=1$ geht.
+    erzeugt wird, die Wahrscheinlichkeitsdichte von $\lim_{n \rightarrow \infty} Z_n$ gegen die Standardnormalverteilung mit $\sigma=1$ geht.
     
     \begin{figure}[H]
         \centering
@@ -58,8 +40,8 @@
 
     Aus diesem Grund wurde eine analytische Gaußverteilung mit den Parametern
     \begin{align*}
-        \mu \approx 1,731 \\
-        \sigma \approx 0,292
+        \mu \approx 6 \\
+        \sigma \approx 1
     \end{align*}
     an die berechnete Verteilung gefittet.
 

@@ -47,8 +47,8 @@ void zentralerGrenzwertsatz(uint count, uint sumCount)
 
     VectorXd uRanNum(sumCount);
     double S, sigma, mu, x;
-    mu = 0;
-    sigma = 1;
+    mu = 1/2;
+    sigma = 1/sqrt(12);
 
     for(uint i = 0; i < count; i++)
     {

@@ -3,7 +3,7 @@ all: data/aufgabe1.csv data/aufgabe2 data/aufgabe3 main.pdf
 data/aufgabe1.csv: aufgabe1.py | build
 	python aufgabe1.py
 data/aufgabe2: aufgabe2.cpp | build
-	g++ -O3 -Wall -ffast-math aufgabe2.cpp -o data/aufgabe2
+	g++ -O3 -Wall -std=c++17 -ffast-math aufgabe2.cpp -o data/aufgabe2
 data/aufgabe3: aufgabe3.cpp | build
 	g++ -O3 -Wall -ffast-math aufgabe3.cpp -o data/aufgabe3
 
